@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package appkiosco;
+package Vista;
 
 /**
  *
  * @author xboxk
  */
-public class AppKiosco {
+public class PantallaKiosco {
 
     /**
      * @param args the command line arguments
@@ -17,5 +17,4 @@ public class AppKiosco {
     public static void main(String[] args) {
         // TODO code application logic here
     }
-    
 }
