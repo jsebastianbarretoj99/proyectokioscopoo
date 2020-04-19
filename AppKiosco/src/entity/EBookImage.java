@@ -10,5 +10,29 @@ package entity;
  * @author vale-
  */
 public class EBookImage extends EBook {
+
+    private double precioPorImagen;
+
+    public double getPrecioPorImagen() {
+        return precioPorImagen;
+    }
+
+    public void setPrecioPorImagen(double precioPorImagen) {
+        this.precioPorImagen = precioPorImagen;
+    }
+
+    public EBookImage(double precioPorImagen, String sitioDescarga, String isbn, int unidadesDisponibles, double precioBase, String nombre, int numeroImagenes, int numeroVIdeos) {
+        super(sitioDescarga, isbn, unidadesDisponibles, precioBase, nombre, numeroImagenes, numeroVIdeos);
+        this.precioPorImagen = precioPorImagen;
+    }
+
+    @Override
+    public double precioTotal() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    
+    
     
 }

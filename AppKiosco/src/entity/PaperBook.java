@@ -10,5 +10,14 @@ package entity;
  * @author vale-
  */
 public class PaperBook extends Libro{
+
+    public PaperBook(String isbn, int unidadesDisponibles, double precioBase, String nombre, int numeroImagenes, int numeroVIdeos) {
+        super(isbn, unidadesDisponibles, precioBase, nombre, numeroImagenes, numeroVIdeos);
+    }
+
+    @Override
+    public double precioTotal() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
