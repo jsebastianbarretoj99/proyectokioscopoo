@@ -5,10 +5,45 @@
  */
 package entity;
 
+import java.time.LocalDate;
+import java.util.HashMap;
+
 /**
  *
  * @author vale-
  */
 public class Prestamo {
+    
+    private LocalDate fechaHora;
+    private int numero;
+    public HashMap < Integer, Billete > pagoBillete; 
+    public HashMap < Integer, Libro> librosEnPrestamo;
+
+    public Prestamo() {
+        this.pagoBillete = new HashMap();
+        this.librosEnPrestamo = new HashMap();
+    }
+
+    public Prestamo(LocalDate fechaHora, int numero) {
+        this.fechaHora = fechaHora;
+        this.numero = numero;
+    }
+
+    public LocalDate getFechaHora() {
+        return fechaHora;
+    }
+
+    public void setFechaHora(LocalDate fechaHora) {
+        this.fechaHora = fechaHora;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+    
     
 }

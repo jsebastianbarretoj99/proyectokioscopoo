@@ -5,10 +5,42 @@
  */
 package entity;
 
+import enumaration.Denominacion;
+
 /**
  *
  * @author vale-
  */
 public class Billete {
+    private int cantidad;
+    public Denominacion denominacion;
+    
+
+    public Billete() {
+    }
+
+    public Billete(int cantidad, Denominacion denominacion) {
+        this.cantidad = cantidad;
+        this.denominacion = denominacion; 
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public Denominacion getDenominacion() {
+        return denominacion;
+    }
+
+    public void setDenominacion(Denominacion denominacion) {
+        this.denominacion = denominacion;
+    }
+    
+    
+    
     
 }
