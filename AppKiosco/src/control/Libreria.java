@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class Libreria {
 
-    public GestionLibro gestion;
+    public GestionLibro gestion = new GestionLibro();
     public Prestamo prestamoActual;
     public HashMap< Denominacion, Billete> dineroAcumulado;
     public HashMap< Integer, Prestamo> prestamos;
@@ -30,9 +30,14 @@ public class Libreria {
 
     // 1 c 
     public Libreria() {
-        crearColeccionBilletes();
+        crearColeccionLibros();
+        crearColeccionBilletes();      
     }
 
+    // 1 a II
+    private void cearColeccionLibros(){
+        this.librosDisponibles = this.gestion.crearColeccionLibro();
+    }
     // 1 b II
     private void crearColeccionBilletes() {
         this.dineroAcumulado = new HashMap();
@@ -65,6 +70,8 @@ public class Libreria {
         }
 
     }
+    
+    
 
     // 2 b 4 1
     private boolean unidadesDisponiblesLibros() {
@@ -131,7 +138,7 @@ public class Libreria {
     private double totalIntroducido() {
         double total = 0;
         for (Billete bil : this.prestamoActual.pagoBillete.values()) {
-            total += bil.getDenominacion().getValor();
+            total += (bil.getCantidad() * bil.getDenominacion().getValor());
         }
         return total;
     }
@@ -139,6 +146,10 @@ public class Libreria {
     // 6 a II 4 a 
     private double saldoFaltante() {
         return totalIntroducido() - valorTAcumulado();
+    }
+
+    private void crearColeccionLibros() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
