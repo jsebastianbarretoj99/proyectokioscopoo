@@ -5,6 +5,7 @@
  */
 package entity;
 
+import enumaration.Denominacion;
 import java.time.LocalDate;
 import java.util.HashMap;
 
@@ -16,7 +17,7 @@ public class Prestamo {
     
     private LocalDate fechaHora;
     private int numero;
-    public HashMap < Integer, Billete > pagoBillete; 
+    public HashMap < Denominacion, Billete > pagoBillete; 
     public HashMap < Integer, Libro> librosEnPrestamo;
 
     public Prestamo() {
