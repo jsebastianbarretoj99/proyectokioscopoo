@@ -18,8 +18,6 @@ public class PorEBook extends Descuento {
     public PorEBook() {
     }
     
-    
-    
     @Override
     public void calcularTotal(){ 
         

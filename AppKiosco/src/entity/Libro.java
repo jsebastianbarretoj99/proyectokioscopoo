@@ -94,16 +94,7 @@ public abstract class Libro {
         this.numeroImagenes = numeroImagenes;
         this.numeroVIdeos = numeroVIdeos;
     }
-    
-    
-    
-    
-
-
-    
-    
-    
+ 
     public abstract double precioTotal();
     
-
 }

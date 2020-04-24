@@ -17,7 +17,7 @@ public class PaperBook extends Libro{
 
     @Override
     public double precioTotal() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return 0.0;
     }
     
 }

@@ -6,9 +6,13 @@
 package control;
 
 import dto.AcabarPrestamo;
+import dto.ListarLibros;
 import dto.PagoPrestamo;
 import entity.Billete;
+import entity.EBookImage;
+import entity.EBookVideo;
 import entity.Libro;
+import entity.PaperBook;
 import entity.Prestamo;
 import enumaration.Denominacion;
 import java.time.LocalDate;
@@ -20,7 +24,7 @@ import java.util.List;
  *
  * @author vale-
  */
-public class Libreria {
+public abstract class Libreria{
 
     public GestionLibro gestion = new GestionLibro();
     public Prestamo prestamoActual;
@@ -29,13 +33,13 @@ public class Libreria {
     public HashMap< String, Libro> librosDisponibles;
 
     // 1 c 
-    public Libreria() {
+    public Libreria(){
         crearColeccionLibros();
         crearColeccionBilletes();      
     }
 
     // 1 a II
-    private void cearColeccionLibros(){
+    private void crearColeccionLibros(){
         this.librosDisponibles = this.gestion.crearColeccionLibro();
     }
     // 1 b II
@@ -84,6 +88,26 @@ public class Libreria {
         } else {
             return false;
         }
+    }
+    
+    // 3 
+    public HashMap<String, ListarLibros> listarLibros(){
+        HashMap<String, ListarLibros> lista = new HashMap<>();
+        ListarLibros ob = new ListarLibros();
+        for(Libro lib: this.librosDisponibles.values()){
+            ob.setIsbn(lib.getIsbn());
+            ob.setNombre(lib.getNombre());
+            //ob.setPrecio();
+            if(lib instanceof PaperBook){
+                ob.setTipo("PB");
+            }else if(lib instanceof EBookImage){
+                ob.setTipo("EBI");
+            }else if(lib instanceof EBookVideo){
+                ob.setTipo("EBV");
+            }
+            lista.put(lib.getIsbn(), ob);
+        }
+        return lista;
     }
 
     // punto 4 a V 5 a ; Punto 6 a II 3 a

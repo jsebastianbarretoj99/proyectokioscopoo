@@ -25,11 +25,7 @@ public abstract class EBook extends Libro{
         super(isbn, unidadesDisponibles, precioBase, nombre, numeroImagenes, numeroVIdeos);
         this.sitioDescarga = sitioDescarga;
     }
-
-
     
-
- 
-
-    
+    @Override
+    public abstract double precioTotal();
 }
