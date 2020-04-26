@@ -97,7 +97,7 @@ public abstract class Libreria{
         for(Libro lib: this.librosDisponibles.values()){
             ob.setIsbn(lib.getIsbn());
             ob.setNombre(lib.getNombre());
-            //ob.setPrecio();
+            //ob.setPrecio(precioTotal(ob));    REVISARRR
             if(lib instanceof PaperBook){
                 ob.setTipo("PB");
             }else if(lib instanceof EBookImage){
@@ -111,7 +111,7 @@ public abstract class Libreria{
     }
 
     // punto 4 a V 5 a ; Punto 6 a II 3 a
-    private double valorTAcumulado() {
+    private double valorTAcumulado(){
         return 0;
     }
 
