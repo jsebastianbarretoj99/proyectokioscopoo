@@ -242,18 +242,68 @@ public abstract class Libreria{
 
     }
 
-    // 6 a II 2 a
+    // 6 a II 2 a 
     private double totalIntroducido() {
-        double total = 0;
-        for (Billete bil : this.prestamoActual.pagoBillete.values()) {
-            total += (bil.getCantidad() * bil.getDenominacion().getValor());
-        }
+        double total;
+        total = totalIntroducidoGeneral(this.prestamoActual.pagoBillete);
         return total;
     }
+   
 
     // 6 a II 4 a 
     private double saldoFaltante() {
         return totalIntroducido() - valorTAcumulado();
     }
+    //Punto 7
+   private AcabarPrestamo terminarPrestamo(){
+       
+        AcabarPrestamo acabar = new AcabarPrestamo();
+        //punto 7 b 1 
+        if (saldoFaltante() >= 0) {
+            
+            if (totalIntroducidoGeneral(dineroAcumulado) >= saldoFaltante()) {
+                // punto 7 b III 1 
+                actualizarExistenciaLibro();
+                // punto 7 b IV 1 
+                acabar.setError(null);
+                // punto 7 b IV 2
+                acabar.setNumeroT(totalPrestamoLibro());
+                // punto 7 b IV 3
+                acabar.setValorTotalPrestamo(totalAcumuladoPrestamo());
+                // punto 7 b IV 4
+                acabar.settBilletes(sumaBilletes(this.prestamoActual.getPagoBilletes()));
+                // punto 7 b IV 5
+                acabar.setVueltas(diferenciaValor() * (-1));
+                // punto 7 b III 2 
+                actualizarExistenciaDinero();
+            } else {
+                // punto 7 b IV 1 
+                acabar.setError("no hay dinero suficiente para devolver");
+            }
+        } else {
+            // punto 7 b IV 1 
+            acabar.setError("no ingreso el dinero suficiente");
+        }
+        return acabar;
     
+       
+   }
+    private double totalIntroducidoGeneral(HashMap<Denominacion, Billete> listaBilletes) {
+        double total = 0;
+        for (Billete bil :listaBilletes.values()) {
+            total += (bil.getCantidad() * bil.getDenominacion().getValor());
+        }
+        return total;
+    }
+    
+        public void actualizarExistenciaLibro() {
+        Libro lib1;
+        for (Libro lib : this.prestamoActual.librosEnPrestamo.values()) {
+            lib1 = buscarLibroIsbn(lib.getIsbn());
+            lib1.setUnidadesDisponibles(lib1.getUnidadesDisponibles() - 1);
+            for (Libro ob : lib1.getSaga().values()) {
+                ob.setUnidadesDisponibles(ob.getUnidadesDisponibles() - 1);
+            }
+        }
+    }
 }

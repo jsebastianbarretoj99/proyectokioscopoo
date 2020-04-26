@@ -13,15 +13,23 @@ import entity.Prestamo;
  */
 public class AcabarPrestamo {
     String error;
-    Prestamo pres;
+    int numeroTotalPrestamo;
+    double valorTPrestamo;
+    int totalIntroBilletes;
+    double valorTVueltas;
 
     public AcabarPrestamo() {
     }
 
-    public AcabarPrestamo(String error, Prestamo pres) {
+    public AcabarPrestamo(String error, int numeroTotalPrestamo, double valorTPrestamo, int totalIntroBilletes, double valorTVueltas) {
         this.error = error;
-        this.pres = pres;
+        this.numeroTotalPrestamo = numeroTotalPrestamo;
+        this.valorTPrestamo = valorTPrestamo;
+        this.totalIntroBilletes = totalIntroBilletes;
+        this.valorTVueltas = valorTVueltas;
     }
+
+  
 
     public String getError() {
         return error;
@@ -31,13 +39,38 @@ public class AcabarPrestamo {
         this.error = error;
     }
 
-    public Prestamo getPres() {
-        return pres;
+    public int getNumeroTotalPrestamo() {
+        return numeroTotalPrestamo;
     }
 
-    public void setPres(Prestamo pres) {
-        this.pres = pres;
+    public void setNumeroTotalPrestamo(int numeroTotalPrestamo) {
+        this.numeroTotalPrestamo = numeroTotalPrestamo;
     }
+
+    public double getValorTPrestamo() {
+        return valorTPrestamo;
+    }
+
+    public void setValorTPrestamo(double valorTPrestamo) {
+        this.valorTPrestamo = valorTPrestamo;
+    }
+
+    public int getTotalIntroBilletes() {
+        return totalIntroBilletes;
+    }
+
+    public void setTotalIntroBilletes(int totalIntroBilletes) {
+        this.totalIntroBilletes = totalIntroBilletes;
+    }
+
+    public double getValorTVueltas() {
+        return valorTVueltas;
+    }
+
+    public void setValorTVueltas(double valorTVueltas) {
+        this.valorTVueltas = valorTVueltas;
+    }
+
     
     
     
