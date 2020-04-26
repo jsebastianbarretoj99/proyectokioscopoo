@@ -158,7 +158,12 @@ public abstract class Libreria{
     
     // punto 4 a V 5 a ; Punto 6 a II 3 a
     private double valorTAcumulado(){
-        return 0;
+       double acumulado = 0;
+        
+         for(Libro lib: this.prestamoActual.librosEnPrestamo.values()){
+             acumulado += lib.precioTotal();        
+        }
+         return acumulado;
     }
     
     // punto 4 b 
@@ -222,12 +227,4 @@ public abstract class Libreria{
         return totalIntroducido() - valorTAcumulado();
     }
     
-    public double valorTotalAcumulado(){
-        double acumulado = 0;
-        
-         for(Libro lib: this.prestamoActual.librosEnPrestamo.values()){
-             acumulado += lib.precioTotal();        
-        }
-         return acumulado;
-    }
 }
