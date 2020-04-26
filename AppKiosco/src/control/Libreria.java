@@ -154,7 +154,7 @@ public abstract class Libreria{
         errorAgregar.setTotalLibros(totalLibrosPrestamo());
         errorAgregar.setValorTotalPrestamo(valorTAcumulado());
         return errorAgregar;
-    }
+    } 
     
    //punto 4 a I 1 
     private Libro buscarLibroIsbn(String isbn_p) {
