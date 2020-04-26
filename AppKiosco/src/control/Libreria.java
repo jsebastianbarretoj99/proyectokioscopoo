@@ -175,5 +175,13 @@ public abstract class Libreria{
     private void crearColeccionLibros() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
+    public double valorTotalAcumulado(){
+        double acumulado = 0;
+        
+         for(Libro lib: this.prestamoActual.librosEnPrestamo.values()){
+             acumulado += lib.precioTotal();        
+        }
+         return acumulado;
+    }
 }
