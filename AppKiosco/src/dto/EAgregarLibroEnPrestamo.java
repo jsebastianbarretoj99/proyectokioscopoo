@@ -14,6 +14,7 @@ public class EAgregarLibroEnPrestamo {
     private int totalLibros;
     private int totalLibrosSaga;
     private double valorLibrosSaga;
+    private double valorTotalPrestamo;
 
     public String getError() {
         return error;
@@ -47,14 +48,23 @@ public class EAgregarLibroEnPrestamo {
         this.valorLibrosSaga = valorLibrosSaga;
     }
 
+    public double getValorTotalPrestamo() {
+        return valorTotalPrestamo;
+    }
+
+    public void setValorTotalPrestamo(double valorTotalPrestamo) {
+        this.valorTotalPrestamo = valorTotalPrestamo;
+    }
+
     public EAgregarLibroEnPrestamo() {
     }
 
-    public EAgregarLibroEnPrestamo(String error, int totalLibros, int totalLibrosSaga, double valorLibrosSaga) {
+    public EAgregarLibroEnPrestamo(String error, int totalLibros, int totalLibrosSaga, double valorLibrosSaga, double valorTotalPrestamo) {
         this.error = error;
         this.totalLibros = totalLibros;
         this.totalLibrosSaga = totalLibrosSaga;
         this.valorLibrosSaga = valorLibrosSaga;
+        this.valorTotalPrestamo = valorTotalPrestamo;
     }
     
 }

@@ -119,22 +119,25 @@ public abstract class Libreria{
     public EAgregarLibroEnPrestamo agregarLibro(String isbn, HashMap<String, Libro> saga){
         EAgregarLibroEnPrestamo errorAgregar = new EAgregarLibroEnPrestamo();
         Libro lib = buscarLibroIsbn(isbn);
+        // punto 4 a I
         if(lib != null){
+            // punto 4 a II
             if(unidadesDisponiblesLibros(isbn)){
+                // punto 4 a III
+                this.prestamoActual.librosEnPrestamo.put(lib.getIsbn(),lib);
                 
             }else{
             errorAgregar.setError("No hay unidades suficientes para el prestamo del libro solicitado");
-            errorAgregar.setTotalLibros(this.prestamoActual.librosEnPrestamo.size());
-            errorAgregar.setTotalLibrosSaga(this.librosDisponibles.get(isbn).getSaga().size());
-            errorAgregar.setValorLibrosSaga(); 
             }
+            errorAgregar.setTotalLibrosSaga(totalLibrosSaga(isbn));
+            errorAgregar.setValorLibrosSaga(precioTotalSaga(isbn)); 
         }else{
             errorAgregar.setError("El libro solicitado no existe");
-            errorAgregar.setTotalLibros(this.prestamoActual.librosEnPrestamo.size());
             errorAgregar.setTotalLibrosSaga(0);
-            errorAgregar.setValorLibrosSaga(0);
+            errorAgregar.setValorLibrosSaga(0); 
         }
-            
+        errorAgregar.setTotalLibros(totalLibrosPrestamo());
+        errorAgregar.setValorTotalPrestamo(valorTAcumulado());
         return errorAgregar;
     }
     
@@ -156,19 +159,45 @@ public abstract class Libreria{
         return false;
     }
     
+    // punto 4 a V 2 a
+    private int totalLibrosPrestamo(){
+        return this.prestamoActual.librosEnPrestamo.size();
+    }
+    
+    // punto 4 a V 3 a
+    private int totalLibrosSaga(String isbn){
+        return this.librosDisponibles.get(isbn).getSaga().size();
+    }   
+    // punto 4 a V 4 a
+    private double precioTotalSaga(String isbn){
+       double acom =0;
+       for(Libro lib : buscarSaga(isbn).values()){
+           acom += usePrecioTotal(lib);
+       }
+       return acom;
+    }
+    
+    private double usePrecioTotal(Libro lib){
+        if(lib instanceof PaperBook){
+            PaperBook auxL = (PaperBook)lib;
+            return auxL.precioTotal();   
+        }else if(lib instanceof EBookVideo){
+            EBookVideo auxL = (EBookVideo)lib;
+            return auxL.precioTotal(); 
+        }else{
+            EBookImage auxL = (EBookImage)lib;
+            return auxL.precioTotal(); 
+        }
+    }
+
     // punto 4 a V 5 a ; Punto 6 a II 3 a
     private double valorTAcumulado(){
        double acumulado = 0;
-        
-         for(Libro lib: this.prestamoActual.librosEnPrestamo.values()){
-             acumulado += lib.precioTotal();        
+        for(Libro lib: this.prestamoActual.librosEnPrestamo.values()){
+            acumulado += usePrecioTotal(lib);
         }
-         return acumulado;
+        return acumulado;
     }
-    
-    // punto 4 b 
-    
-    
 
     // punto 5 
     public HashMap<Integer, Denominacion> listarBillete() {

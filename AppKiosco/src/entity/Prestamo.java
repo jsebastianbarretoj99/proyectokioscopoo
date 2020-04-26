@@ -18,7 +18,7 @@ public class Prestamo {
     private LocalDate fechaHora;
     private int numero;
     public HashMap < Denominacion, Billete > pagoBillete; 
-    public HashMap < Integer, Libro> librosEnPrestamo;
+    public HashMap < String, Libro> librosEnPrestamo;
 
     public Prestamo() {
         this.pagoBillete = new HashMap();
