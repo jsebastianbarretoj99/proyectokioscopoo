@@ -5,6 +5,7 @@
  */
 package control;
 
+import dto.AcabarPrestamo;
 import dto.IniciarPrestamo;
 import dto.EAgregarLibroEnPrestamo;
 import dto.ListarLibros;
@@ -25,7 +26,7 @@ import java.util.HashMap;
  *
  * @author vale-
  */
-public abstract class Libreria{
+public class Libreria{
 
     public GestionLibro gestion = new GestionLibro();
     public Prestamo prestamoActual;
@@ -259,7 +260,7 @@ public abstract class Libreria{
         //6 a II 1 
         pago.setPagoBillete(this.prestamoActual.pagoBillete);
         // 6 a II 2
-        pago.setTotalIntro(totalIntroducido());
+        pago.setTotalIntro(totalIntroducido(this.prestamoActual.pagoBillete));
         // 6 a II 3
         pago.setValorPrestamo(valorTAcumulado());
         // 6 a II 4
@@ -275,16 +276,17 @@ public abstract class Libreria{
     }
 
     // 6 a II 2 a 
-    private double totalIntroducido() {
-        double total;
-        total = totalIntroducidoGeneral(this.prestamoActual.pagoBillete);
+        private double totalIntroducido(HashMap<Denominacion, Billete> listaBilletes) {
+        double total = 0;
+        for (Billete bil :listaBilletes.values()) {
+            total += (bil.getCantidad() * bil.getDenominacion().getValor());
+        }
         return total;
-    }
-   
+    }   
 
     // 6 a II 4 a 
     private double saldoFaltante() {
-        return totalIntroducido() - valorTAcumulado();
+        return totalIntroducido(this.prestamoActual.pagoBillete) - valorTAcumulado();
     }
     //Punto 7
    private AcabarPrestamo terminarPrestamo(){
@@ -293,7 +295,7 @@ public abstract class Libreria{
         //punto 7 b 1 
         if (saldoFaltante() >= 0) {
             
-            if (totalIntroducidoGeneral(dineroAcumulado) >= saldoFaltante()) {
+            if (totalIntroducido(dineroAcumulado) >= saldoFaltante()) {
                 // punto 7 b III 1 
                 actualizarExistenciaLibro();
                 // punto 7 b IV 1 
@@ -316,19 +318,10 @@ public abstract class Libreria{
             // punto 7 b IV 1 
             acabar.setError("no ingreso el dinero suficiente");
         }
-        return acabar;
-    
-       
+        return acabar;   
    }
-    private double totalIntroducidoGeneral(HashMap<Denominacion, Billete> listaBilletes) {
-        double total = 0;
-        for (Billete bil :listaBilletes.values()) {
-            total += (bil.getCantidad() * bil.getDenominacion().getValor());
-        }
-        return total;
-    }
     
-        public void actualizarExistenciaLibro() {
+    public void actualizarExistenciaLibro() {
         Libro lib1;
         for (Libro lib : this.prestamoActual.librosEnPrestamo.values()) {
             lib1 = buscarLibroIsbn(lib.getIsbn());
