@@ -11,14 +11,14 @@ import entity.Prestamo;
  *
  * @author vale-
  */
-public class AcabarPrestamo {
-    String error;
-    Prestamo pres;
+public class IniciarPrestamo {
+    private String error;
+    private Prestamo pres ;
 
-    public AcabarPrestamo() {
+    public IniciarPrestamo() {
     }
 
-    public AcabarPrestamo(String error, Prestamo pres) {
+    public IniciarPrestamo(String error, Prestamo pres) {
         this.error = error;
         this.pres = pres;
     }
@@ -38,7 +38,5 @@ public class AcabarPrestamo {
     public void setPres(Prestamo pres) {
         this.pres = pres;
     }
-    
-    
     
 }

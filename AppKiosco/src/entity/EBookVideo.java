@@ -25,9 +25,10 @@ public class EBookVideo extends EBook {
         this.precioPorVideo = precioPorVideo;
     }
 
+    // punto 4 a IV 1 b II
     @Override
     public double precioTotal() {
-        return 0.0;
+        return super.getPrecioBase() + (this.precioPorVideo*super.getNumeroVideos());
     }
     
     

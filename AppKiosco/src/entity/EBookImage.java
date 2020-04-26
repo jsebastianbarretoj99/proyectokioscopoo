@@ -26,13 +26,10 @@ public class EBookImage extends EBook {
         this.precioPorImagen = precioPorImagen;
     }
 
+    // punto 4 a IV 1 b I 
     @Override
-    public double precioTotal() {
-        return 0.0;
+    public double precioTotal(){
+        return super.getPrecioBase() + (this.precioPorImagen*super.getNumeroImagenes());
     }
-
-    
-    
-    
-    
+   
 }
