@@ -11,17 +11,35 @@ import entity.Prestamo;
  *
  * @author vale-
  */
+<<<<<<< HEAD:AppKiosco/src/dto/AcabarPrestamo.java
+public class AcabarPrestamo {
+    String error;
+    int numeroTotalPrestamo;
+    double valorTPrestamo;
+    int totalIntroBilletes;
+    double valorTVueltas;
+=======
 public class IniciarPrestamo {
     private String error;
     private Prestamo pres ;
+>>>>>>> 00354a3972593b46be8ab0b53b83fb798e890e29:AppKiosco/src/dto/IniciarPrestamo.java
 
     public IniciarPrestamo() {
     }
 
+<<<<<<< HEAD:AppKiosco/src/dto/AcabarPrestamo.java
+    public AcabarPrestamo(String error, int numeroTotalPrestamo, double valorTPrestamo, int totalIntroBilletes, double valorTVueltas) {
+=======
     public IniciarPrestamo(String error, Prestamo pres) {
+>>>>>>> 00354a3972593b46be8ab0b53b83fb798e890e29:AppKiosco/src/dto/IniciarPrestamo.java
         this.error = error;
-        this.pres = pres;
+        this.numeroTotalPrestamo = numeroTotalPrestamo;
+        this.valorTPrestamo = valorTPrestamo;
+        this.totalIntroBilletes = totalIntroBilletes;
+        this.valorTVueltas = valorTVueltas;
     }
+
+  
 
     public String getError() {
         return error;
@@ -31,12 +49,37 @@ public class IniciarPrestamo {
         this.error = error;
     }
 
-    public Prestamo getPres() {
-        return pres;
+    public int getNumeroTotalPrestamo() {
+        return numeroTotalPrestamo;
     }
 
-    public void setPres(Prestamo pres) {
-        this.pres = pres;
+    public void setNumeroTotalPrestamo(int numeroTotalPrestamo) {
+        this.numeroTotalPrestamo = numeroTotalPrestamo;
     }
+
+    public double getValorTPrestamo() {
+        return valorTPrestamo;
+    }
+
+    public void setValorTPrestamo(double valorTPrestamo) {
+        this.valorTPrestamo = valorTPrestamo;
+    }
+
+    public int getTotalIntroBilletes() {
+        return totalIntroBilletes;
+    }
+
+    public void setTotalIntroBilletes(int totalIntroBilletes) {
+        this.totalIntroBilletes = totalIntroBilletes;
+    }
+
+    public double getValorTVueltas() {
+        return valorTVueltas;
+    }
+
+    public void setValorTVueltas(double valorTVueltas) {
+        this.valorTVueltas = valorTVueltas;
+    }
+
     
 }
