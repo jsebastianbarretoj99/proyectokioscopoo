@@ -6,6 +6,7 @@
 package control;
 
 import dto.AcabarPrestamo;
+import dto.EAgregarLibroEnPrestamo;
 import dto.ListarLibros;
 import dto.PagoPrestamo;
 import entity.Billete;
@@ -16,10 +17,7 @@ import entity.PaperBook;
 import entity.Prestamo;
 import enumaration.Denominacion;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
 /**
  *
  * @author vale-
@@ -109,11 +107,63 @@ public abstract class Libreria{
         }
         return lista;
     }
-
+    
+    //Punto 4 
+    public HashMap<String, Libro> buscarSaga(String isbn){
+        Libro lib = this.librosDisponibles.get(isbn);
+        return lib.getSaga();
+    }
+    
+    
+    // Punto 4 
+    public EAgregarLibroEnPrestamo agregarLibro(String isbn, HashMap<String, Libro> saga){
+        EAgregarLibroEnPrestamo errorAgregar = new EAgregarLibroEnPrestamo();
+        Libro lib = buscarLibroIsbn(isbn);
+        if(lib != null){
+            if(unidadesDisponiblesLibros(isbn)){
+                
+            }else{
+            errorAgregar.setError("No hay unidades suficientes para el prestamo del libro solicitado");
+            errorAgregar.setTotalLibros(this.prestamoActual.librosEnPrestamo.size());
+            errorAgregar.setTotalLibrosSaga(this.librosDisponibles.get(isbn).getSaga().size());
+            errorAgregar.setValorLibrosSaga(); 
+            }
+        }else{
+            errorAgregar.setError("El libro solicitado no existe");
+            errorAgregar.setTotalLibros(this.prestamoActual.librosEnPrestamo.size());
+            errorAgregar.setTotalLibrosSaga(0);
+            errorAgregar.setValorLibrosSaga(0);
+        }
+            
+        return errorAgregar;
+    }
+    
+   //punto 4 a I 1 
+    private Libro buscarLibroIsbn(String isbn_p) {
+        for (Libro lib : this.librosDisponibles.values()) {
+            if (isbn_p.equals(lib.getIsbn())) {
+                return lib;
+            }
+        }
+        return null;
+    }
+    
+    // punto 4 I 2
+    private boolean unidadesDisponiblesLibros(String isbn){
+        Libro lib = this.librosDisponibles.get(isbn);
+        if(lib.getUnidadesDisponibles() > this.prestamoActual.librosEnPrestamo.get(isbn).getUnidadesDisponibles())
+            return true;
+        return false;
+    }
+    
     // punto 4 a V 5 a ; Punto 6 a II 3 a
     private double valorTAcumulado(){
         return 0;
     }
+    
+    // punto 4 b 
+    
+    
 
     // punto 5 
     public HashMap<Integer, Denominacion> listarBillete() {
@@ -170,10 +220,6 @@ public abstract class Libreria{
     // 6 a II 4 a 
     private double saldoFaltante() {
         return totalIntroducido() - valorTAcumulado();
-    }
-
-    private void crearColeccionLibros() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public double valorTotalAcumulado(){

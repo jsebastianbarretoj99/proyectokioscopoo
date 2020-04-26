@@ -5,7 +5,7 @@
  */
 package entity;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -19,8 +19,8 @@ public abstract class Libro {
     private String nombre;
     private int numeroImagenes;
     private int numeroVIdeos;
-    private ArrayList<Libro> saga = new ArrayList<>();
-    private ArrayList<Descuento> descuentos = new ArrayList<>();
+    private HashMap<String,Libro> saga = new HashMap<>();
+    private HashMap<Integer, Descuento> descuentos = new HashMap<>();
 
     public String getIsbn() {
         return isbn;
@@ -70,19 +70,19 @@ public abstract class Libro {
         this.numeroVIdeos = numeroVIdeos;
     }
 
-    public ArrayList<Libro> getSaga() {
+    public HashMap<String, Libro> getSaga() {
         return saga;
     }
 
-    public void setSaga(ArrayList<Libro> saga) {
+    public void setSaga(HashMap<String, Libro> saga) {
         this.saga = saga;
     }
 
-    public ArrayList<Descuento> getDescuentos() {
+    public HashMap<Integer, Descuento> getDescuentos() {
         return descuentos;
     }
 
-    public void setDescuentos(ArrayList<Descuento> descuentos) {
+    public void setDescuentos(HashMap<Integer, Descuento> descuentos) {
         this.descuentos = descuentos;
     }
 
