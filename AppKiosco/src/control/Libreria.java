@@ -5,15 +5,18 @@
  */
 package control;
 
-import dto.AcabarPrestamo;
+import dto.IniciarPrestamo;
 import dto.EAgregarLibroEnPrestamo;
 import dto.ListarLibros;
 import dto.PagoPrestamo;
 import entity.Billete;
+import entity.Descuento;
 import entity.EBookImage;
 import entity.EBookVideo;
 import entity.Libro;
 import entity.PaperBook;
+import entity.PorEBook;
+import entity.PorSaga;
 import entity.Prestamo;
 import enumaration.Denominacion;
 import java.time.LocalDate;
@@ -50,9 +53,9 @@ public abstract class Libreria{
     }
 
     //punto 2
-    public AcabarPrestamo iniciraPrestamo() {
+    public IniciarPrestamo iniciraPrestamo() {
         LocalDate ahora = LocalDate.now();
-        AcabarPrestamo acab = new AcabarPrestamo();
+        IniciarPrestamo acab = new IniciarPrestamo();
         if (unidadesDisponiblesLibros()) {
             if (prestamos.isEmpty()) {
                 prestamos.put(0, new Prestamo(ahora, 1));
@@ -61,7 +64,7 @@ public abstract class Libreria{
             }
 
             prestamoActual = prestamos.get(prestamos.size() - 1);
-
+            
             acab.setError(null);
             acab.setPres(prestamoActual);
             return acab;
@@ -119,13 +122,25 @@ public abstract class Libreria{
     public EAgregarLibroEnPrestamo agregarLibro(String isbn, HashMap<String, Libro> saga){
         EAgregarLibroEnPrestamo errorAgregar = new EAgregarLibroEnPrestamo();
         Libro lib = buscarLibroIsbn(isbn);
+        double precioT = 0, totalDescuentos = 0;
         // punto 4 a I
         if(lib != null){
             // punto 4 a II
             if(unidadesDisponiblesLibros(isbn)){
                 // punto 4 a III
                 this.prestamoActual.librosEnPrestamo.put(lib.getIsbn(),lib);
-                
+                // punto 4 a IV c I
+                precioT = librosSagaPrestamo(lib.getIsbn());
+                for(Descuento des: lib.getDescuentos().values()){
+                    if(des instanceof PorSaga){
+                        PorSaga sa = (PorSaga)des;
+                        totalDescuentos += des.calcularTotal(precioT);
+                    }else if(des instanceof PorEBook){
+                        PorEBook sa = (PorEBook)des;
+                        totalDescuentos += des.calcularTotal(precioT);
+                    }
+                }
+                precioT -= totalDescuentos;
             }else{
             errorAgregar.setError("No hay unidades suficientes para el prestamo del libro solicitado");
             }
@@ -157,6 +172,23 @@ public abstract class Libreria{
         if(lib.getUnidadesDisponibles() > this.prestamoActual.librosEnPrestamo.get(isbn).getUnidadesDisponibles())
             return true;
         return false;
+    }
+    
+    // punto 4 a IV c I
+    private double librosSagaPrestamo(String isbn){
+        double acum = 0;
+        if(!buscarSaga(isbn).isEmpty()){
+            for (Libro lib : buscarSaga(isbn).values()){ 
+                for (Libro lib2 : this.prestamoActual.librosEnPrestamo.values()){
+                    if(lib2.getIsbn().equals(lib.getIsbn())){
+                        acum += usePrecioTotal(lib);
+                    }
+                }
+            }
+        }else{
+            acum += usePrecioTotal(buscarLibroIsbn(isbn));
+        }
+        return acum;
     }
     
     // punto 4 a V 2 a

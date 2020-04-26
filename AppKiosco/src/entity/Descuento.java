@@ -27,7 +27,7 @@ public abstract class Descuento {
     public Descuento() {
     }
     
-    public abstract void calcularTotal();
+    public abstract double calcularTotal(double valor );
     
     
 }

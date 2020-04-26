@@ -13,6 +13,14 @@ package entity;
 public  class  PorSaga extends Descuento{
     private int numeroSaga;
 
+    public PorSaga() {
+    }
+    
+    public PorSaga(int numeroSaga, double porcentaje) {
+        super(porcentaje);
+        this.numeroSaga = numeroSaga;
+    }
+        
     public int getNumeroSaga() {
         return numeroSaga;
     }
@@ -21,18 +29,8 @@ public  class  PorSaga extends Descuento{
         this.numeroSaga = numeroSaga;
     }
     
-
-    public PorSaga(int numeroSaga, double porcentaje) {
-        super(porcentaje);
-        this.numeroSaga = numeroSaga;
-    }
-    
-    public PorSaga() {
-    }
-    
-    
     @Override
-    public void calcularTotal(){
-    
+    public double calcularTotal(double valor){        
+        return 0.0;
     }
 }

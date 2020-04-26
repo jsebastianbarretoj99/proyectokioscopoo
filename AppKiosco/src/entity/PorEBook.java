@@ -18,9 +18,10 @@ public class PorEBook extends Descuento {
     public PorEBook() {
     }
     
+    // punto 4 a IV c II 2
     @Override
-    public void calcularTotal(){ 
-        
+    public double calcularTotal(double valor){ 
+        return valor*super.getPorcentaje();
     }
  
 }

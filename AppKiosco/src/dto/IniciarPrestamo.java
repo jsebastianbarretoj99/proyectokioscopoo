@@ -11,17 +11,27 @@ import entity.Prestamo;
  *
  * @author vale-
  */
+<<<<<<< HEAD:AppKiosco/src/dto/AcabarPrestamo.java
 public class AcabarPrestamo {
     String error;
     int numeroTotalPrestamo;
     double valorTPrestamo;
     int totalIntroBilletes;
     double valorTVueltas;
+=======
+public class IniciarPrestamo {
+    private String error;
+    private Prestamo pres ;
+>>>>>>> 00354a3972593b46be8ab0b53b83fb798e890e29:AppKiosco/src/dto/IniciarPrestamo.java
 
-    public AcabarPrestamo() {
+    public IniciarPrestamo() {
     }
 
+<<<<<<< HEAD:AppKiosco/src/dto/AcabarPrestamo.java
     public AcabarPrestamo(String error, int numeroTotalPrestamo, double valorTPrestamo, int totalIntroBilletes, double valorTVueltas) {
+=======
+    public IniciarPrestamo(String error, Prestamo pres) {
+>>>>>>> 00354a3972593b46be8ab0b53b83fb798e890e29:AppKiosco/src/dto/IniciarPrestamo.java
         this.error = error;
         this.numeroTotalPrestamo = numeroTotalPrestamo;
         this.valorTPrestamo = valorTPrestamo;
@@ -71,7 +81,5 @@ public class AcabarPrestamo {
         this.valorTVueltas = valorTVueltas;
     }
 
-    
-    
     
 }
