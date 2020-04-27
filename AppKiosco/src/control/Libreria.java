@@ -330,8 +330,6 @@ public class Libreria {
         return totalIntroducido(this.prestamoActual.getPagoBillete()) - totalPrestamo();
     }
 
-<<<<<<< HEAD
-=======
     //Punto 7
     private AcabarPrestamo terminarPrestamo() {
 
@@ -465,7 +463,6 @@ public class Libreria {
         }
         return cantidad;
     }
->>>>>>> c4c34f0a8b4c697fa80858edcabd073c69c0f97a
     
     // Punto 8
     public ReporteDiario generarReporte() {
