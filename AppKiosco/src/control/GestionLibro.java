@@ -43,9 +43,8 @@ public class GestionLibro {
         pb3.setSaga(saga);
         pb4.setSaga(saga);
         pb5.setSaga(saga);
-      //  PorSaga ps1 = new PorSaga(, 0)
-        
-        //descuento.put(0, )
+        PorSaga ps1 = new PorSaga(, 0)
+        descuento.put(0, )
         
         return librosDispo;
     }
