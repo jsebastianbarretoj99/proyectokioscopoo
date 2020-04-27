@@ -14,7 +14,7 @@ import entity.Prestamo;
 public class IniciarPrestamo {
     private String error;
     private Prestamo pres ;
-
+    
     public IniciarPrestamo() {
     }
 
