@@ -17,7 +17,9 @@ public enum Denominacion {
     DIEZMIL(10000);
 
     private double valor;
-
+   
+        
+        
     private Denominacion(double valor) {
         this.valor = valor;
     }
@@ -29,5 +31,5 @@ public enum Denominacion {
     public void setValor(double valor) {
         this.valor = valor;
     }
-
+    
 }

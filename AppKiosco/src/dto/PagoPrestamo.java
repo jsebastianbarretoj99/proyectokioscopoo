@@ -62,8 +62,5 @@ public class PagoPrestamo {
     public void setSaldoFaltante(double saldoFaltante) {
         this.saldoFaltante = saldoFaltante;
     }
-    
-    
-    
 
 }

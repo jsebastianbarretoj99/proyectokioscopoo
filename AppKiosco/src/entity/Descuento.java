@@ -1,4 +1,7 @@
 package entity;
+
+import java.util.HashMap;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -27,7 +30,7 @@ public abstract class Descuento {
     public Descuento() {
     }
     
-    public abstract void calcularTotal();
+    public abstract double calcularTotal(double valor, HashMap <Integer,Libro> saga);
     
     
 }

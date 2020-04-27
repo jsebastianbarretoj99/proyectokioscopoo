@@ -17,8 +17,8 @@ public class Prestamo {
     
     private LocalDate fechaHora;
     private int numero;
-    public HashMap < Denominacion, Billete > pagoBillete; 
-    public HashMap < Integer, Libro> librosEnPrestamo;
+    private HashMap < Denominacion, Billete > pagoBillete; 
+    private HashMap < String, Libro> librosEnPrestamo;
 
     public Prestamo() {
         this.pagoBillete = new HashMap();
@@ -45,6 +45,20 @@ public class Prestamo {
     public void setNumero(int numero) {
         this.numero = numero;
     }
-    
-    
+
+    public HashMap<Denominacion, Billete> getPagoBillete() {
+        return pagoBillete;
+    }
+
+    public void setPagoBillete(HashMap<Denominacion, Billete> pagoBillete) {
+        this.pagoBillete = pagoBillete;
+    }
+
+    public HashMap<String, Libro> getLibrosEnPrestamo() {
+        return librosEnPrestamo;
+    }
+
+    public void setLibrosEnPrestamo(HashMap<String, Libro> librosEnPrestamo) {
+        this.librosEnPrestamo = librosEnPrestamo;
+    }
 }
