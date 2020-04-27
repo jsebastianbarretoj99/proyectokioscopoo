@@ -172,9 +172,6 @@ public abstract class Libreria{
         return totalIntroducido() - valorTAcumulado();
     }
 
-    private void crearColeccionLibros() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     public double valorTotalAcumulado(){
         double acumulado = 0;
