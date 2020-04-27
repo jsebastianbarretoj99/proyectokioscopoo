@@ -13,11 +13,11 @@ import entity.Prestamo;
  */
 
 public class AcabarPrestamo {
-    String error;
-    int numeroTotalPrestamo;
-    double valorTPrestamo;
-    int totalIntroBilletes;
-    double valorTVueltas;
+    private String error;
+    private int numeroTotalPrestamo;
+    private double valorTPrestamo;
+    private int totalIntroBilletes;
+    private double valorTVueltas;
 
     public AcabarPrestamo() {
     }

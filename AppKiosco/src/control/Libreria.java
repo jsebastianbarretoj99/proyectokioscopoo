@@ -10,8 +10,11 @@ import dto.IniciarPrestamo;
 import dto.EAgregarLibroEnPrestamo;
 import dto.ListarLibros;
 import dto.PagoPrestamo;
+import dto.ReporteDiario;
+import dto.ReporteLibroDiario;
 import entity.Billete;
 import entity.Descuento;
+import entity.EBook;
 import entity.EBookImage;
 import entity.EBookVideo;
 import entity.Libro;
@@ -22,28 +25,70 @@ import entity.Prestamo;
 import enumaration.Denominacion;
 import java.time.LocalDate;
 import java.util.HashMap;
+
 /**
  *
  * @author vale-
  */
-public class Libreria{
+public class Libreria {
 
-    public GestionLibro gestion = new GestionLibro();
-    public Prestamo prestamoActual;
-    public HashMap< Denominacion, Billete> dineroAcumulado;
-    public HashMap< Integer, Prestamo> prestamos;
-    public HashMap< String, Libro> librosDisponibles;
+    private GestionLibro gestion = new GestionLibro();
+    private Prestamo prestamoActual;
+    private HashMap< Denominacion, Billete> dineroAcumulado;
+    private HashMap< Integer, Prestamo> prestamos;
+    private HashMap< String, Libro> librosDisponibles;
 
     // 1 c 
-    public Libreria(){
+    public Libreria() {
         crearColeccionLibros();
-        crearColeccionBilletes();      
+        crearColeccionBilletes();
+    }
+
+    public GestionLibro getGestion() {
+        return gestion;
+    }
+
+    public void setGestion(GestionLibro gestion) {
+        this.gestion = gestion;
+    }
+
+    public Prestamo getPrestamoActual() {
+        return prestamoActual;
+    }
+
+    public void setPrestamoActual(Prestamo prestamoActual) {
+        this.prestamoActual = prestamoActual;
+    }
+
+    public HashMap<Denominacion, Billete> getDineroAcumulado() {
+        return dineroAcumulado;
+    }
+
+    public void setDineroAcumulado(HashMap<Denominacion, Billete> dineroAcumulado) {
+        this.dineroAcumulado = dineroAcumulado;
+    }
+
+    public HashMap<Integer, Prestamo> getPrestamos() {
+        return prestamos;
+    }
+
+    public void setPrestamos(HashMap<Integer, Prestamo> prestamos) {
+        this.prestamos = prestamos;
+    }
+
+    public HashMap<String, Libro> getLibrosDisponibles() {
+        return librosDisponibles;
+    }
+
+    public void setLibrosDisponibles(HashMap<String, Libro> librosDisponibles) {
+        this.librosDisponibles = librosDisponibles;
     }
 
     // 1 a II
-    private void crearColeccionLibros(){
+    private void crearColeccionLibros() {
         this.librosDisponibles = this.gestion.crearColeccionLibro();
     }
+
     // 1 b II
     private void crearColeccionBilletes() {
         this.dineroAcumulado = new HashMap();
@@ -65,7 +110,7 @@ public class Libreria{
             }
 
             prestamoActual = prestamos.get(prestamos.size() - 1);
-            
+
             acab.setError(null);
             acab.setPres(prestamoActual);
             return acab;
@@ -76,8 +121,6 @@ public class Libreria{
         }
 
     }
-    
-    
 
     // 2 b 4 1
     private boolean unidadesDisponiblesLibros() {
@@ -91,73 +134,61 @@ public class Libreria{
             return false;
         }
     }
-    
+
     // 3 
-    public HashMap<String, ListarLibros> listarLibros(){
+    public HashMap<String, ListarLibros> listarLibros() {
         HashMap<String, ListarLibros> lista = new HashMap<>();
         ListarLibros ob = new ListarLibros();
-        for(Libro lib: this.librosDisponibles.values()){
+        for (Libro lib : this.librosDisponibles.values()) {
             ob.setIsbn(lib.getIsbn());
             ob.setNombre(lib.getNombre());
             //ob.setPrecio(precioTotal(ob));    REVISARRR
-            if(lib instanceof PaperBook){
+            if (lib instanceof PaperBook) {
                 ob.setTipo("PB");
-            }else if(lib instanceof EBookImage){
+            } else if (lib instanceof EBookImage) {
                 ob.setTipo("EBI");
-            }else if(lib instanceof EBookVideo){
+            } else if (lib instanceof EBookVideo) {
                 ob.setTipo("EBV");
             }
             lista.put(lib.getIsbn(), ob);
         }
         return lista;
     }
-    
+
     //Punto 4 
-    public HashMap<String, Libro> buscarSaga(String isbn){
+    public HashMap<Integer, Libro> buscarSaga(String isbn) {
         Libro lib = this.librosDisponibles.get(isbn);
         return lib.getSaga();
     }
-    
-    
+
     // Punto 4 
-    public EAgregarLibroEnPrestamo agregarLibro(String isbn, HashMap<String, Libro> saga){
+    public EAgregarLibroEnPrestamo agregarLibro(String isbn, HashMap<Integer, Libro> saga) {
         EAgregarLibroEnPrestamo errorAgregar = new EAgregarLibroEnPrestamo();
         Libro lib = buscarLibroIsbn(isbn);
-        double precioT = 0, totalDescuentos = 0;
+        lib.setSaga(saga);
         // punto 4 a I
-        if(lib != null){
+        if (lib != null) {
             // punto 4 a II
-            if(unidadesDisponiblesLibros(isbn)){
+            if (unidadesDisponiblesLibros(isbn)) {
                 // punto 4 a III
-                this.prestamoActual.librosEnPrestamo.put(lib.getIsbn(),lib);
+                this.prestamoActual.getLibrosEnPrestamo().put(lib.getIsbn(), lib);
                 // punto 4 a IV c I
-                precioT = librosSagaPrestamo(lib.getIsbn());
-                for(Descuento des: lib.getDescuentos().values()){
-                    if(des instanceof PorSaga){
-                        PorSaga sa = (PorSaga)des;
-                        totalDescuentos += des.calcularTotal(precioT);
-                    }else if(des instanceof PorEBook){
-                        PorEBook sa = (PorEBook)des;
-                        totalDescuentos += des.calcularTotal(precioT);
-                    }
-                }
-                precioT -= totalDescuentos;
-            }else{
-            errorAgregar.setError("No hay unidades suficientes para el prestamo del libro solicitado");
+                errorAgregar.setValorLibrosSaga(totalSaga(saga));
+            } else {
+                errorAgregar.setError("No hay unidades suficientes para el prestamo del libro solicitado");
+                errorAgregar.setValorLibrosSaga(0);
             }
-            errorAgregar.setTotalLibrosSaga(totalLibrosSaga(isbn));
-            errorAgregar.setValorLibrosSaga(precioTotalSaga(isbn)); 
-        }else{
+        } else {
             errorAgregar.setError("El libro solicitado no existe");
-            errorAgregar.setTotalLibrosSaga(0);
-            errorAgregar.setValorLibrosSaga(0); 
+            errorAgregar.setValorLibrosSaga(0);
         }
         errorAgregar.setTotalLibros(totalLibrosPrestamo());
-        errorAgregar.setValorTotalPrestamo(valorTAcumulado());
+        errorAgregar.setTotalLibrosSaga(totalLibrosSaga(lib));
+        errorAgregar.setValorTotalPrestamo(totalPrestamo());
         return errorAgregar;
-    } 
-    
-   //punto 4 a I 1 
+    }
+
+    //punto 4 a I 1 
     private Libro buscarLibroIsbn(String isbn_p) {
         for (Libro lib : this.librosDisponibles.values()) {
             if (isbn_p.equals(lib.getIsbn())) {
@@ -166,70 +197,80 @@ public class Libreria{
         }
         return null;
     }
-    
+
     // punto 4 I 2
-    private boolean unidadesDisponiblesLibros(String isbn){
+    private boolean unidadesDisponiblesLibros(String isbn) {
         Libro lib = this.librosDisponibles.get(isbn);
-        if(lib.getUnidadesDisponibles() > this.prestamoActual.librosEnPrestamo.get(isbn).getUnidadesDisponibles())
+        if (lib.getUnidadesDisponibles() > this.prestamoActual.getLibrosEnPrestamo().get(isbn).getUnidadesDisponibles()) {
             return true;
+        }
         return false;
     }
-    
-    // punto 4 a IV c I
-    private double librosSagaPrestamo(String isbn){
-        double acum = 0;
-        if(!buscarSaga(isbn).isEmpty()){
-            for (Libro lib : buscarSaga(isbn).values()){ 
-                for (Libro lib2 : this.prestamoActual.librosEnPrestamo.values()){
-                    if(lib2.getIsbn().equals(lib.getIsbn())){
-                        acum += usePrecioTotal(lib);
-                    }
-                }
-            }
-        }else{
-            acum += usePrecioTotal(buscarLibroIsbn(isbn));
-        }
-        return acum;
-    }
-    
-    // punto 4 a V 2 a
-    private int totalLibrosPrestamo(){
-        return this.prestamoActual.librosEnPrestamo.size();
-    }
-    
-    // punto 4 a V 3 a
-    private int totalLibrosSaga(String isbn){
-        return this.librosDisponibles.get(isbn).getSaga().size();
-    }   
-    // punto 4 a V 4 a
-    private double precioTotalSaga(String isbn){
-       double acom =0;
-       for(Libro lib : buscarSaga(isbn).values()){
-           acom += usePrecioTotal(lib);
-       }
-       return acom;
-    }
-    
-    private double usePrecioTotal(Libro lib){
-        if(lib instanceof PaperBook){
-            PaperBook auxL = (PaperBook)lib;
-            return auxL.precioTotal();   
-        }else if(lib instanceof EBookVideo){
-            EBookVideo auxL = (EBookVideo)lib;
-            return auxL.precioTotal(); 
-        }else{
-            EBookImage auxL = (EBookImage)lib;
-            return auxL.precioTotal(); 
+
+    private double usePrecioTotal(Libro lib) {
+        if (lib instanceof PaperBook) {
+            PaperBook auxL = (PaperBook) lib;
+            return auxL.precioTotal();
+        } else if (lib instanceof EBookVideo) {
+            EBookVideo auxL = (EBookVideo) lib;
+            return auxL.precioTotal();
+        } else {
+            EBookImage auxL = (EBookImage) lib;
+            return auxL.precioTotal();
         }
     }
 
-    // punto 4 a V 5 a ; Punto 6 a II 3 a
-    private double valorTAcumulado(){
-       double acumulado = 0;
-        for(Libro lib: this.prestamoActual.librosEnPrestamo.values()){
-            acumulado += usePrecioTotal(lib);
+    private boolean buscarLibroSaga(int key, HashMap<Integer, Libro> saga) {
+        return saga.containsKey(key);
+    }
+
+    private double sumaDescuentos(Libro lib, double precioT) {
+        double totalDescuentos = 0;
+        for (Descuento des : lib.getDescuentos().values()) {
+            if (des instanceof PorSaga) {
+                PorSaga sa = (PorSaga) des;
+                if (buscarLibroSaga(sa.getNumeroSaga(), lib.getSaga())) {
+                    totalDescuentos += sa.calcularTotal(precioT, lib.getSaga());
+                }
+            } else if (des instanceof PorEBook) {
+                PorEBook eb = (PorEBook) des;
+                totalDescuentos += eb.calcularTotal(precioT, lib.getSaga());
+            }
         }
-        return acumulado;
+        return totalDescuentos;
+    }
+
+    // punto 4 a V 2 a
+    private int totalLibrosPrestamo() {
+        int tot = 0;
+        for (Libro lib : this.prestamoActual.getLibrosEnPrestamo().values()) {
+            tot += (lib.getSaga().size() + 1);
+        }
+        return tot;
+    }
+
+    // punto 4 a V 3 a
+    private int totalLibrosSaga(Libro libro) {
+        return libro.getSaga().size();
+    }
+
+    private double totalSaga(HashMap<Integer, Libro> saga) {
+        double precioT = 0;
+        for (Libro libro : saga.values()) {
+            precioT += usePrecioTotal(libro);
+        }
+        return precioT;
+    }
+    // punto 4 a V 5 a ; Punto 6 a II 3 a
+
+    private double totalPrestamo() {
+        double precioT = 0;
+        for (Libro lib : this.prestamoActual.getLibrosEnPrestamo().values()) {
+            precioT += totalSaga(lib.getSaga());
+            precioT += usePrecioTotal(lib);
+            precioT -= sumaDescuentos(lib, precioT);
+        }
+        return precioT;
     }
 
     // punto 5 
@@ -249,20 +290,20 @@ public class Libreria{
         // 6 a I 1  
         if (buscarDenominacio(demo, this.dineroAcumulado)) {
             //6 a I 2
-            if (buscarDenominacio(demo, this.prestamoActual.pagoBillete)) {
-                bil = this.prestamoActual.pagoBillete.get(demo);
+            if (buscarDenominacio(demo, this.prestamoActual.getPagoBillete())) {
+                bil = this.prestamoActual.getPagoBillete().get(demo);
                 bil.setCantidad(bil.getCantidad() + 1);
             } else {
-                this.prestamoActual.pagoBillete.put(demo, new Billete(1, demo));
+                this.prestamoActual.getPagoBillete().put(demo, new Billete(1, demo));
             }
         }
 
         //6 a II 1 
-        pago.setPagoBillete(this.prestamoActual.pagoBillete);
-        // 6 a II 2
-        pago.setTotalIntro(totalIntroducido(this.prestamoActual.pagoBillete));
+        pago.setPagoBillete(this.prestamoActual.getPagoBillete());
+        // 6 a II 2  
+        pago.setTotalIntro(totalIntroducido(this.prestamoActual.getPagoBillete()));
         // 6 a II 3
-        pago.setValorPrestamo(valorTAcumulado());
+        pago.setValorPrestamo(totalPrestamo());
         // 6 a II 4
         pago.setSaldoFaltante(saldoFaltante());
 
@@ -276,25 +317,26 @@ public class Libreria{
     }
 
     // 6 a II 2 a 
-        private double totalIntroducido(HashMap<Denominacion, Billete> listaBilletes) {
+    private double totalIntroducido(HashMap<Denominacion, Billete> listaBilletes) {
         double total = 0;
-        for (Billete bil :listaBilletes.values()) {
+        for (Billete bil : listaBilletes.values()) {
             total += (bil.getCantidad() * bil.getDenominacion().getValor());
         }
         return total;
-    }   
+    }
 
     // 6 a II 4 a 
     private double saldoFaltante() {
-        return totalIntroducido(this.prestamoActual.pagoBillete) - valorTAcumulado();
+        return totalIntroducido(this.prestamoActual.getPagoBillete()) - totalPrestamo();
     }
+
     //Punto 7
-   private AcabarPrestamo terminarPrestamo(){
-       
+    private AcabarPrestamo terminarPrestamo() {
+
         AcabarPrestamo acabar = new AcabarPrestamo();
         //punto 7 b 1 
         if (saldoFaltante() >= 0) {
-            
+
             if (totalIntroducido(dineroAcumulado) >= saldoFaltante()) {
                 // punto 7 b III 1 
                 actualizarExistenciaLibro();
@@ -318,12 +360,12 @@ public class Libreria{
             // punto 7 b IV 1 
             acabar.setError("no ingreso el dinero suficiente");
         }
-        return acabar;   
-   }
-    
+        return acabar;
+    }
+
     public void actualizarExistenciaLibro() {
         Libro lib1;
-        for (Libro lib : this.prestamoActual.librosEnPrestamo.values()) {
+        for (Libro lib : this.prestamoActual.getLibrosEnPrestamo().values()) {
             lib1 = buscarLibroIsbn(lib.getIsbn());
             lib1.setUnidadesDisponibles(lib1.getUnidadesDisponibles() - 1);
             for (Libro ob : lib1.getSaga().values()) {
@@ -331,4 +373,99 @@ public class Libreria{
             }
         }
     }
+
+    public ReporteDiario generarReporte() {
+        ReporteDiario reporte = new ReporteDiario();
+        reporte.setValorPrestamoD(valorTPresatamosD());
+        reporteCantidad(reporte);
+        reporteTotal(reporte);
+        reporteNoVendidos(reporte);
+        reporteSitiosDescarga(reporte);
+        return reporte;
+    }
+
+    // 8 b I 1 
+    private double valorTPresatamosD() {
+        double precioT = 0;
+        for (Prestamo pres : this.prestamos.values()) {
+            this.prestamoActual = pres;
+            precioT += totalPrestamo();
+        }
+        return precioT;
+    }
+
+    // punto 8 b II 2
+    private void reporteCantidad(ReporteDiario repor) {
+        ReporteLibroDiario libro = new ReporteLibroDiario();
+        int canP = 0, canEV = 0, canEI = 0, precioP = 0, precioEV = 0, precioEI = 0;
+        for (Prestamo pres : this.prestamos.values()) {
+            for (Libro lib : pres.getLibrosEnPrestamo().values()) {
+                if (lib instanceof PaperBook) {
+                    PaperBook lib2 = (PaperBook) lib;
+                    canP++;
+                    precioP += lib2.precioTotal();
+                } else if (lib instanceof EBookImage) {
+                    EBookImage lib2 = (EBookImage) lib;
+                    canEI++;
+                    precioEI += lib2.precioTotal();
+                } else {
+                    EBookVideo lib2 = (EBookVideo) lib;
+                    canEV++;
+                    precioEV += lib2.precioTotal();
+                }
+            }
+        }
+        libro.setTipo("PaperBook");
+        libro.setCantidadPrestamo(canP);
+        libro.setPreciPrestamo(precioP);
+        repor.getReporteD().put(libro.getTipo(), libro);
+        libro.setTipo("EBookImage");
+        libro.setCantidadPrestamo(canEI);
+        libro.setPreciPrestamo(precioEI);
+        repor.getReporteD().put(libro.getTipo(), libro);
+        libro.setTipo("EBookVideo");
+        libro.setCantidadPrestamo(canEV);
+        libro.setPreciPrestamo(precioEV);
+        repor.getReporteD().put(libro.getTipo(), libro);
+    }
+
+    // punto 8 b II 3
+    private void reporteTotal(ReporteDiario repor) {
+        ReporteLibroDiario libro = new ReporteLibroDiario();
+        libro.setTipo("EBook");
+        libro.setCantidadPrestamo(repor.getReporteD().get("EBookVideo").getCantidadPrestamo() + repor.getReporteD().get("EBookImage").getCantidadPrestamo());
+        repor.getReporteD().put(libro.getTipo(), libro);
+        libro.setTipo("Book");
+        libro.setCantidadPrestamo(repor.getReporteD().get("PaperBook").getCantidadPrestamo() + repor.getReporteD().get("EBook").getCantidadPrestamo());
+        repor.getReporteD().put(libro.getTipo(), libro);
+    }
+
+    // punto 8 b III 1
+    private void reporteNoVendidos(ReporteDiario repor) {
+        Integer acomp = 0, acomeb = 0;
+        for (Libro lib : this.librosDisponibles.values()) {
+            for (Prestamo pres : this.prestamos.values()) {
+                if (!pres.getLibrosEnPrestamo().containsKey(lib.getIsbn())) {
+                    if (lib instanceof PaperBook) {
+                        acomp += lib.getUnidadesDisponibles();
+                    } else {
+                        acomeb += lib.getUnidadesDisponibles();
+                    }
+                }
+            }
+        }
+        repor.getLibrosNoVendidos().put("PaperBook", acomp);
+        repor.getLibrosNoVendidos().put("EBook", acomeb);
+    }
+
+    // punto 8 b IV 1
+    private void reporteSitiosDescarga(ReporteDiario repor) {
+        for (Libro lib : this.librosDisponibles.values()) {
+            if (!(lib instanceof PaperBook)) {
+                EBook lib2 = (EBook) lib;
+                repor.getSitiosDescarga().put(lib.getIsbn(), lib2.getSitioDescarga());                
+            }
+        }
+    }
 }
+

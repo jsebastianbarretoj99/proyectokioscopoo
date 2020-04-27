@@ -5,7 +5,10 @@
  */
 package control;
 
+import entity.Descuento;
 import entity.Libro;
+import entity.PaperBook;
+import entity.PorSaga;
 import java.util.HashMap;
 
 
@@ -21,75 +24,29 @@ public class GestionLibro {
 
     //punto 1 a I
     public HashMap<String, Libro> crearColeccionLibro() {
-        HashMap<String, Libro> librosDispo = new HashMap<>();
-        /*Libro lib = new Libro("100", 8, 65000, "Cien Años de Soledad");
-        lib.getObsequios().add(new Libro("2100", 1, 12000, "Crimen y Castigo"));
-        lib.getObsequios().add(new Libro("2200", 1, 16000, "Rojo y Negro"));
-        libros.add(lib);
-        lib = new Libro("200", 8, 35000, "Cincuenta Sombras de Grey");
-        libros.add(lib);
-        lib = new Libro("300", 8, 75000, "Narnia El principe de Caspian");
-        lib.getObsequios().add(new Libro("2300", 1, 12000, "1984"));
-        libros.add(lib);
-        lib = new Libro("400", 8, 16000, "Harry Potter El principe Mestizo");
-        lib.getObsequios().add(new Libro("2100", 1, 12000, "Crimen y Castigo"));
-        lib.getObsequios().add(new Libro("2300", 1, 16000, "El principito"));
-        lib.getObsequios().add(new Libro("2200", 1, 16000, "Rojo y Negro"));
-        libros.add(lib);
-        lib = new Libro("500", 8, 27000, "Maze Runner");
-        lib.getObsequios().add(new Libro("2200", 1, 16000, "Rojo y Negro"));
-        libros.add(lib);
-        lib = new Libro("600", 8, 3300, "Crepusculo");
-        libros.add(lib);
-        lib = new Libro("700", 8, 5500, "Dracula");
-        libros.add(lib);
-        lib = new Libro("800", 8, 800000, "Microcircuitos Sedra Smith");
-        lib.getObsequios().add(new Libro("2100", 1, 12000, "Crimen y Castigo"));
-        lib.getObsequios().add(new Libro("2300", 1, 16000, "El principito"));
-        lib.getObsequios().add(new Libro("2200", 1, 16000, "Rojo y Negro"));
-        libros.add(lib);
-        lib = new Libro("900", 8, 67800, "Divergente");
-        lib.getObsequios().add(new Libro("2300", 1, 16000, "El principito"));
-        libros.add(lib);
-        lib = new Libro("1000", 8, 350000, "Insurgente");
-        lib.getObsequios().add(new Libro("2300", 1, 16000, "El principito"));
-        lib.getObsequios().add(new Libro("2200", 1, 16000, "Rojo y Negro"));
-        libros.add(lib);
-        lib = new Libro("1100", 8, 6800, "Leal");
-        lib.getObsequios().add(new Libro("2100", 1, 12000, "Crimen y Castigo"));
-        libros.add(lib);
-        lib = new Libro("1200", 8, 37000, "Chupa El Perro");
-        lib.getObsequios().add(new Libro("2100", 1, 12000, "Crimen y Castigo"));
-        lib.getObsequios().add(new Libro("2300", 1, 16000, "El principito"));
-        lib.getObsequios().add(new Libro("2200", 1, 16000, "Rojo y Negro"));
-        libros.add(lib);
-        lib = new Libro("1300", 8, 54000, "Juego de Tronos");
-        lib.getObsequios().add(new Libro("2100", 1, 12000, "Crimen y Castigo"));
-        lib.getObsequios().add(new Libro("2300", 1, 16000, "El principito"));
-        lib.getObsequios().add(new Libro("2200", 1, 16000, "Rojo y Negro"));
-        libros.add(lib);
-        lib = new Libro("1400", 8, 96000, "Choque de Reyes");
-        lib.getObsequios().add(new Libro("2200", 1, 16000, "Rojo y Negro"));
-        libros.add(lib);
-        lib = new Libro("1500", 8, 97000, "Tormenta de Espadas");
-        lib.getObsequios().add(new Libro("2300", 1, 16000, "El principito"));
-        lib.getObsequios().add(new Libro("2200", 1, 16000, "Rojo y Negro"));
-        libros.add(lib);
-        lib = new Libro("1600", 1, 38000, "Festin de Cuervos");
-        lib.getObsequios().add(new Libro("2200", 1, 16000, "Rojo y Negro"));
-        libros.add(lib);
-        lib = new Libro("1700", 5, 68000, "Danza de Dragones");
-        libros.add(lib);
-        lib = new Libro("1800", 8, 39000, "vientos de invierno");
-        lib.getObsequios().add(new Libro("2200", 1, 16000, "Rojo y Negro"));
-        libros.add(lib);
-        lib = new Libro("1900", 8, 691000, "Sueño de primavera");
-        lib.getObsequios().add(new Libro("2300", 1, 16000, "El principito"));
-        lib.getObsequios().add(new Libro("2200", 1, 16000, "Rojo y Negro"));
-        libros.add(lib);
-        lib = new Libro("2000", 4, 45000, "ready Player One");
-        lib.getObsequios().add(new Libro("2300", 1, 16000, "El principito"));
-        libros.add(lib);*/
+        HashMap<String, Libro> librosDispo     = new HashMap<>();
+        HashMap<Integer, Libro> saga           = new HashMap<>();
+        HashMap<Integer, Descuento> descuento  = new HashMap<>();
+        
+        PaperBook pb1 = new PaperBook("100", 200, "H7", 10, 500, "Harry Potter y las Reliquias de la Muerte", 0, 0);
+        PaperBook pb2 = new PaperBook("101", 200, "H6", 5, 500, "Harry Potter y el Principe Mestizo", 0, 0);
+        PaperBook pb3 = new PaperBook("104", 200, "H1", 1, 200, "Harry Potter y la Piedra filosofal", 0, 0);
+        PaperBook pb4 = new PaperBook("102", 200, "H5", 8, 300, "Harry Potter y la Orden del Fenix", 0, 0);
+        PaperBook pb5 = new PaperBook("103", 200, "H2", 10, 600, "Harry Potter y la camara Secreta", 0, 0);
+        saga.put(1, pb3);
+        saga.put(2, pb5);
+        saga.put(5, pb4);
+        saga.put(6, pb2);
+        saga.put(7, pb1);
+        pb1.setSaga(saga);
+        pb2.setSaga(saga);
+        pb3.setSaga(saga);
+        pb4.setSaga(saga);
+        pb5.setSaga(saga);
+      //  PorSaga ps1 = new PorSaga(, 0)
+        
+        //descuento.put(0, )
+        
         return librosDispo;
     }
 }

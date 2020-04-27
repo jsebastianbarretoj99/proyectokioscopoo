@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.HashMap;
+
     /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -30,7 +32,11 @@ public  class  PorSaga extends Descuento{
     }
     
     @Override
-    public double calcularTotal(double valor){        
-        return 0.0;
+    public double calcularTotal(double valor, HashMap <Integer,Libro> saga){
+        if(!saga.containsKey(this.numeroSaga)){
+            return 0.0;
+        } else {
+            return valor*super.getPorcentaje();
+        }
     }
 }

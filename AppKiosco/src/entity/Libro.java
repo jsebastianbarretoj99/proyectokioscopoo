@@ -19,8 +19,22 @@ public abstract class Libro {
     private String nombre;
     private int numeroImagenes;
     private int numeroVideos;
-    private HashMap<String,Libro> saga = new HashMap<>();
-    private HashMap<Integer, Descuento> descuentos = new HashMap<>();
+    private HashMap<Integer,Libro> saga;
+    private HashMap<Integer, Descuento> descuentos;
+
+    public Libro(){
+        saga = new HashMap<>();
+        descuentos = new HashMap<>();
+    }
+    
+    public Libro(String isbn, int unidadesDisponibles, double precioBase, String nombre, int numeroImagenes, int numeroVIdeos) {
+        this.isbn = isbn;
+        this.unidadesDisponibles = unidadesDisponibles;
+        this.precioBase = precioBase;
+        this.nombre = nombre;
+        this.numeroImagenes = numeroImagenes;
+        this.numeroVideos = numeroVIdeos;
+    }
 
     public String getIsbn() {
         return isbn;
@@ -70,11 +84,11 @@ public abstract class Libro {
         this.numeroVideos = numeroVIdeos;
     }
 
-    public HashMap<String, Libro> getSaga() {
+    public HashMap<Integer, Libro> getSaga() {
         return saga;
     }
 
-    public void setSaga(HashMap<String, Libro> saga) {
+    public void setSaga(HashMap<Integer, Libro> saga) {
         this.saga = saga;
     }
 
@@ -84,15 +98,6 @@ public abstract class Libro {
 
     public void setDescuentos(HashMap<Integer, Descuento> descuentos) {
         this.descuentos = descuentos;
-    }
-
-    public Libro(String isbn, int unidadesDisponibles, double precioBase, String nombre, int numeroImagenes, int numeroVIdeos) {
-        this.isbn = isbn;
-        this.unidadesDisponibles = unidadesDisponibles;
-        this.precioBase = precioBase;
-        this.nombre = nombre;
-        this.numeroImagenes = numeroImagenes;
-        this.numeroVideos = numeroVIdeos;
     }
  
     public abstract double precioTotal();

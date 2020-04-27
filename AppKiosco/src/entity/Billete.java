@@ -13,7 +13,7 @@ import enumaration.Denominacion;
  */
 public class Billete {
     private int cantidad;
-    public Denominacion denominacion;
+    private Denominacion denominacion;
     
 
     public Billete() {
@@ -39,8 +39,5 @@ public class Billete {
     public void setDenominacion(Denominacion denominacion) {
         this.denominacion = denominacion;
     }
-    
-    
-    
-    
+   
 }
