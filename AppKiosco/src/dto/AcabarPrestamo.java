@@ -14,17 +14,17 @@ import entity.Prestamo;
 
 public class AcabarPrestamo {
     private String error;
-    private int numeroTotalPrestamo;
+    private int numeroTotalLibros;
     private double valorTPrestamo;
-    private int totalIntroBilletes;
+    private double totalIntroBilletes;
     private double valorTVueltas;
 
     public AcabarPrestamo() {
     }
 
-    public AcabarPrestamo(String error, int numeroTotalPrestamo, double valorTPrestamo, int totalIntroBilletes, double valorTVueltas){
+    public AcabarPrestamo(String error, int numeroTotalPrestamo, double valorTPrestamo, double totalIntroBilletes, double valorTVueltas){
         this.error = error;
-        this.numeroTotalPrestamo = numeroTotalPrestamo;
+        this.numeroTotalLibros = numeroTotalPrestamo;
         this.valorTPrestamo = valorTPrestamo;
         this.totalIntroBilletes = totalIntroBilletes;
         this.valorTVueltas = valorTVueltas;
@@ -38,12 +38,12 @@ public class AcabarPrestamo {
         this.error = error;
     }
 
-    public int getNumeroTotalPrestamo() {
-        return numeroTotalPrestamo;
+    public int getNumeroTotalLibros() {
+        return numeroTotalLibros;
     }
 
-    public void setNumeroTotalPrestamo(int numeroTotalPrestamo) {
-        this.numeroTotalPrestamo = numeroTotalPrestamo;
+    public void setNumeroTotalLibros(int numeroTotalLibros) {
+        this.numeroTotalLibros = numeroTotalLibros;
     }
 
     public double getValorTPrestamo() {
@@ -54,11 +54,11 @@ public class AcabarPrestamo {
         this.valorTPrestamo = valorTPrestamo;
     }
 
-    public int getTotalIntroBilletes() {
+    public double getTotalIntroBilletes() {
         return totalIntroBilletes;
     }
 
-    public void setTotalIntroBilletes(int totalIntroBilletes) {
+    public void setTotalIntroBilletes(double totalIntroBilletes) {
         this.totalIntroBilletes = totalIntroBilletes;
     }
 

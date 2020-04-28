@@ -41,9 +41,8 @@ public class GestionLibro {
         saga.put(2, pb5);
         saga.put(5, pb4);
         saga.put(6, pb2);
-        saga.put(7, pb1);
+        saga.put(7, pb1);        
         
-        pb1.setSaga(saga);
         pb2.setSaga(saga);
         pb3.setSaga(saga);
         pb4.setSaga(saga);
@@ -57,14 +56,18 @@ public class GestionLibro {
         
         descuento.put(0,ps1);
         descuento.put(1,ps2);
-        descuento.put(2,ps3);
-        descuento.put(3,ps4);
-        descuento.put(4,ps5);
         
         pb1.setDescuentos(descuento);
         pb2.setDescuentos(descuento);
+        
+        descuento.put(2,ps3);
+        descuento.put(3,ps4);
+        
         pb3.setDescuentos(descuento);
         pb4.setDescuentos(descuento);
+        
+        descuento.put(4,ps5);
+
         pb5.setDescuentos(descuento);
         
         librosDispo.put(pb1.getIsbn(), pb1);
@@ -115,7 +118,7 @@ public class GestionLibro {
         descuento.put(0, es1);
         descuento.put(1, es2);
         descuento.put(2, es3);
-        descuento.put(3, es4);
+        descuento.put(3, es4);        
         descuento.put(4, pe1);
         descuento.put(5, pe2);
         descuento.put(6, pe3);
@@ -136,8 +139,8 @@ public class GestionLibro {
         
         // por EBookIamge
         EBookImage eb5 = new EBookImage(200,"www.circuitos.com", "210", 10, 100, "El último adios", 11, 0);
-        EBookImage eb6 = new EBookImage(50,"www.sagadiver.com", "220", 12, 50, "La chica del tren ", 5, 0);
-        EBookImage eb7 = new EBookImage(150,"www.sagadiver.com", "230", 4, 50, "Bajo la misma estrella", 8, 0);
+        EBookImage eb6 = new EBookImage(50,"www.diver.com", "220", 12, 50, "La chica del tren ", 5, 0);
+        EBookImage eb7 = new EBookImage(150,"www.cursis.com", "230", 4, 50, "Bajo la misma estrella", 8, 0);
         
         PorEBook ebi5 = new PorEBook(0.20);
         PorEBook ebi6 = new PorEBook(0.25);
