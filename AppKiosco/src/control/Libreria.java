@@ -42,6 +42,7 @@ public class Libreria {
     public Libreria() {
         crearColeccionLibros();
         crearColeccionBilletes();
+        this.prestamos = new HashMap();
     }
 
     public GestionLibro getGestion() {
@@ -92,10 +93,10 @@ public class Libreria {
     // 1 b II
     private void crearColeccionBilletes() {
         this.dineroAcumulado = new HashMap();
-        this.dineroAcumulado.put(Denominacion.CIENMIL, new Billete(100, Denominacion.CIENMIL));
-        this.dineroAcumulado.put(Denominacion.CICUENTAMIL, new Billete(100, Denominacion.CICUENTAMIL));
-        this.dineroAcumulado.put(Denominacion.VEINTEMIL, new Billete(100, Denominacion.VEINTEMIL));
-        this.dineroAcumulado.put(Denominacion.DIEZMIL, new Billete(100, Denominacion.DIEZMIL));
+        this.dineroAcumulado.put(Denominacion.CIENMIL, new Billete(10, Denominacion.CIENMIL));
+        this.dineroAcumulado.put(Denominacion.CICUENTAMIL, new Billete(20, Denominacion.CICUENTAMIL));
+        this.dineroAcumulado.put(Denominacion.VEINTEMIL, new Billete(4, Denominacion.VEINTEMIL));
+        this.dineroAcumulado.put(Denominacion.DIEZMIL, new Billete(7, Denominacion.DIEZMIL));
     }
 
     //punto 2
@@ -108,9 +109,7 @@ public class Libreria {
             } else {
                 prestamos.put(prestamos.size(), new Prestamo(ahora, prestamos.size() + 1));
             }
-
             prestamoActual = prestamos.get(prestamos.size() - 1);
-
             acab.setError(null);
             acab.setPres(prestamoActual);
             return acab;
@@ -140,9 +139,10 @@ public class Libreria {
         HashMap<String, ListarLibros> lista = new HashMap<>();
         ListarLibros ob = new ListarLibros();
         for (Libro lib : this.librosDisponibles.values()) {
+            System.out.println("Libro" + lib.getIsbn());
             ob.setIsbn(lib.getIsbn());
             ob.setNombre(lib.getNombre());
-            //ob.setPrecio(precioTotal(ob));    REVISARRR
+            ob.setPrecio(usePrecioTotal(lib));    
             if (lib instanceof PaperBook) {
                 ob.setTipo("PB");
             } else if (lib instanceof EBookImage) {

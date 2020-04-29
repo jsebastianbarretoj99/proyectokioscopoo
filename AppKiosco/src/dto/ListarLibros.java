@@ -56,4 +56,10 @@ public class ListarLibros{
     public void setTipo(String tipo){
         this.tipo = tipo;
     }
+
+    @Override
+    public String toString() {
+        return "ListarLibros{" + "isbn=" + isbn + ", nombre=" + nombre + ", precio=" + precio + ", tipo=" + tipo + '}';
+    }
+    
 }
