@@ -137,12 +137,11 @@ public class Libreria {
     // 3 
     public HashMap<String, ListarLibros> listarLibros() {
         HashMap<String, ListarLibros> lista = new HashMap<>();
-        ListarLibros ob = new ListarLibros();
         for (Libro lib : this.librosDisponibles.values()) {
-            System.out.println("Libro" + lib.getIsbn());
+            ListarLibros ob = new ListarLibros();
             ob.setIsbn(lib.getIsbn());
             ob.setNombre(lib.getNombre());
-            ob.setPrecio(usePrecioTotal(lib));    
+            ob.setPrecio(usePrecioTotal(lib));
             if (lib instanceof PaperBook) {
                 ob.setTipo("PB");
             } else if (lib instanceof EBookImage) {
@@ -435,9 +434,9 @@ public class Libreria {
         modificarValor(libro, "EBookVideo", canEV, precioEV);
         repor.getReporteD().put(libro.getTipo(), libro);
     }
-    
+
     //punto 8 b II 2 
-    private void modificarValor(ReporteLibroDiario libro, String tipo, int canP, int precioP){
+    private void modificarValor(ReporteLibroDiario libro, String tipo, int canP, int precioP) {
         libro.setTipo(tipo);
         libro.setCantidadPrestamo(canP);
         libro.setPreciPrestamo(precioP);

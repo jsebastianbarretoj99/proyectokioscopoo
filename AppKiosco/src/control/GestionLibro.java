@@ -31,11 +31,11 @@ public class GestionLibro {
         HashMap<Integer, Libro> saga           = new HashMap<>();
         HashMap<Integer, Descuento> descuento  = new HashMap<>();
         
-        PaperBook pb1 = new PaperBook("100", 200, "H7", 10, 500, "Harry Potter y las Reliquias de la Muerte", 0, 0);
-        PaperBook pb2 = new PaperBook("101", 200, "H6", 5, 500, "Harry Potter y el Principe Mestizo", 0, 0);
-        PaperBook pb3 = new PaperBook("104", 200, "H1", 1, 200, "Harry Potter y la Piedra filosofal", 0, 0);
-        PaperBook pb4 = new PaperBook("102", 200, "H5", 8, 300, "Harry Potter y la Orden del Fenix", 0, 0);
-        PaperBook pb5 = new PaperBook("103", 200, "H2", 10, 600, "Harry Potter y la camara Secreta", 0, 0);
+        PaperBook pb1 = new PaperBook("100", 20000, "H7", 10, 25000, "Harry Potter y las Reliquias de la Muerte", 0, 0);
+        PaperBook pb2 = new PaperBook("101", 20000, "H6", 5, 30000, "Harry Potter y el Principe Mestizo", 0, 0);
+        PaperBook pb3 = new PaperBook("104", 20000, "H1", 1, 20000, "Harry Potter y la Piedra filosofal", 0, 0);
+        PaperBook pb4 = new PaperBook("102", 20000, "H5", 8, 35000, "Harry Potter y la Orden del Fenix", 0, 0);
+        PaperBook pb5 = new PaperBook("103", 20000, "H2", 10, 15000, "Harry Potter y la camara Secreta", 0, 0);
         
         saga.put(1, pb3);
         saga.put(2, pb5);
@@ -80,9 +80,9 @@ public class GestionLibro {
         descuento.clear();
         
         // Solo un libro 
-        PaperBook pb6 = new PaperBook("110", 300, "L0", 6, 600, "Los Miserables", 0, 0);
-        PaperBook pb7 = new PaperBook("120", 400, "O0", 10, 300, "Orgullo y Prejuicio", 0, 0);
-        PaperBook pb8 = new PaperBook("130", 100, "O0", 10, 300, "La isla bajo el mar", 0, 0);
+        PaperBook pb6 = new PaperBook("110", 30000, "L0", 6, 40000, "Los Miserables", 0, 0);
+        PaperBook pb7 = new PaperBook("120", 40000, "O0", 10, 30000, "Orgullo y Prejuicio", 0, 0);
+        PaperBook pb8 = new PaperBook("130", 10000, "O0", 10, 50000, "La isla bajo el mar", 0, 0);
         
         librosDispo.put(pb6.getIsbn(), pb6);
         librosDispo.put(pb7.getIsbn(), pb7);
@@ -90,10 +90,10 @@ public class GestionLibro {
        
         
         // EbookImage 
-        EBookImage eb1 = new EBookImage(100,"www.sagadiver.com", "200", 10, 50, "Divergente", 15, 0);
-        EBookImage eb2 = new EBookImage(100,"www.sagadiver.com", "201", 6, 50, "Insurgente", 20, 0);
-        EBookImage eb3 = new EBookImage(100,"www.sagadiver.com", "202", 9, 50, "Allegiant", 25, 0);
-        EBookImage eb4 = new EBookImage(100,"www.sagadiver.com", "203", 3, 30, "Cuatro", 18, 0);
+        EBookImage eb1 = new EBookImage(500,"www.sagadiver.com", "D1", 10, 30000, "Divergente", 15, 0);
+        EBookImage eb2 = new EBookImage(500,"www.sagadiver.com", "D2", 6, 25000, "Insurgente", 20, 0);
+        EBookImage eb3 = new EBookImage(500,"www.sagadiver.com", "D3", 9, 50000, "Allegiant", 25, 0);
+        EBookImage eb4 = new EBookImage(500,"www.sagadiver.com", "D4", 3, 30000, "Cuatro", 18, 0);
         
         saga.put(1, eb1);
         saga.put(2, eb2);
@@ -138,9 +138,9 @@ public class GestionLibro {
         saga.clear();
         
         // por EBookIamge
-        EBookImage eb5 = new EBookImage(200,"www.circuitos.com", "210", 10, 100, "El último adios", 11, 0);
-        EBookImage eb6 = new EBookImage(50,"www.diver.com", "220", 12, 50, "La chica del tren ", 5, 0);
-        EBookImage eb7 = new EBookImage(150,"www.cursis.com", "230", 4, 50, "Bajo la misma estrella", 8, 0);
+        EBookImage eb5 = new EBookImage(2000,"www.circuitos.com", "EA", 10, 10000, "El último adios", 11, 0);
+        EBookImage eb6 = new EBookImage(500,"www.diver.com", "CT", 12, 20000, "La chica del tren ", 15, 0);
+        EBookImage eb7 = new EBookImage(1500,"www.cursis.com", "ME", 4, 30000, "Bajo la misma estrella", 8, 0);
         
         PorEBook ebi5 = new PorEBook(0.20);
         PorEBook ebi6 = new PorEBook(0.25);
@@ -159,9 +159,9 @@ public class GestionLibro {
         descuento.clear();     
         
         //Por EBookVideo   
-        EBookVideo ev1 = new EBookVideo(100, "www.tusvideos.com","300", 15, 5000, "El codigo Da Vinci", 0, 12 );
-        EBookVideo ev2 = new EBookVideo(200, "www.tusvideos.com","301", 15, 2500, "Angeles y demonios ", 0, 4);
-        EBookVideo ev3 = new EBookVideo(400, "www.tusvideos.com","302", 10, 6000, "Inferno ", 0, 8 );
+        EBookVideo ev1 = new EBookVideo(5000, "www.tusvideos.com","DA", 15, 20000, "El codigo Da Vinci", 0, 12 );
+        EBookVideo ev2 = new EBookVideo(2000, "www.tusvideos.com","AD", 15, 2500, "Angeles y demonios ", 0, 4);
+        EBookVideo ev3 = new EBookVideo(1500, "www.tusvideos.com","IN", 10, 60000, "Inferno ", 0, 8 );
         
         saga.put(1, ev1);
         saga.put(2, ev2);
@@ -198,8 +198,8 @@ public class GestionLibro {
         saga.clear();
         
         //Por EBookVideo 
-        EBookVideo ev4 = new EBookVideo(300, "www.ninos.com","310", 5, 10000, "El principito", 0, 20 );
-        EBookVideo ev5 = new EBookVideo(250, "www.codigofacil.com","320", 10, 3000, "Muy facil ", 0, 15);
+        EBookVideo ev4 = new EBookVideo(3000, "www.ninos.com","PR", 5, 10000, "El principito", 0, 20 );
+        EBookVideo ev5 = new EBookVideo(2500, "www.codigofacil.com","MF", 10, 3000, "Muy facil ", 0, 15);
         
         PorEBook ebv4 = new PorEBook(0.40);
         PorEBook ebv5 = new PorEBook(0.05);
