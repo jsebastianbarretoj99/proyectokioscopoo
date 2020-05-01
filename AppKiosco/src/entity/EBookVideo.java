@@ -19,7 +19,7 @@ public class EBookVideo extends EBook {
     public void setPrecioPorVideo(double precioPorVideo) {
         this.precioPorVideo = precioPorVideo;
     }
-
+    
     public EBookVideo(double precioPorVideo, String sitioDescarga, String isbn, int unidadesDisponibles, double precioBase, String nombre, int numeroImagenes, int numeroVIdeos) {
         super(sitioDescarga, isbn, unidadesDisponibles, precioBase, nombre, numeroImagenes, numeroVIdeos);
         this.precioPorVideo = precioPorVideo;

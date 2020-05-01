@@ -5,6 +5,9 @@
  */
 package dto;
 
+import entity.Libro;
+import java.util.HashMap;
+
 /**
  *
  * @author xboxk
@@ -14,17 +17,18 @@ public class ListarLibros{
     private String nombre;
     private double precio;
     private String tipo; // EB = EBook, EBV = EBookVideo, EBI = EBookImage, PB = PaperBook
-
+    private HashMap<Integer, Libro> saga;
+    
     public ListarLibros() {
     }
 
-    public ListarLibros(String isbn, String nombre, double precio, String tipo) {
+    public ListarLibros(String isbn, String nombre, double precio, String tipo, HashMap<Integer, Libro> saga) {
         this.isbn = isbn;
         this.nombre = nombre;
         this.precio = precio;
         this.tipo = tipo;
+        this.saga = saga;
     }
-
     public String getIsbn() {
         return isbn;
     }
@@ -57,6 +61,15 @@ public class ListarLibros{
         this.tipo = tipo;
     }
 
+    public HashMap<Integer, Libro> getSaga() {
+        return saga;
+    }
+
+    public void setSaga(HashMap<Integer, Libro> saga) {
+        this.saga = saga;
+    }
+
+    
     @Override
     public String toString() {
         return "ListarLibros{" + "isbn=" + isbn + ", nombre=" + nombre + ", precio=" + precio + ", tipo=" + tipo + '}';

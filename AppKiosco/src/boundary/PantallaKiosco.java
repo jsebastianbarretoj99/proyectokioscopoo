@@ -6,10 +6,14 @@
 package boundary;
 
 import control.Libreria;
+import dto.EAgregarLibroEnPrestamo;
 import dto.IniciarPrestamo;
 import dto.ListarLibros;
+import entity.EBookImage;
+import entity.EBookVideo;
 import entity.Libro;
-import java.util.HashMap;
+import entity.PaperBook;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -60,6 +64,8 @@ public class PantallaKiosco {
                         for (ListarLibros lib : panta.quiosco.listarLibros().values()) {
                             System.out.println(lib.toString());
                         }
+                        //Continuación Punto 3 y Punto 4 
+                        agregarLibro(panta);
 
                     } else {
                         System.out.println(pres.getError());
@@ -77,37 +83,56 @@ public class PantallaKiosco {
     // punto 4 
     public static void agregarLibro(PantallaKiosco pan) {
         Scanner teclado = new Scanner(System.in);
-        String isbn_p = "si", isbn_s;
+        String isbn_p = "si";
+        Integer isbn_s;
         int acum = 0;
-        HashMap<Integer, String> isbn_saga = new HashMap();
-
         System.out.println("Agregue el isbn del libro que desea pedir:"
                 + "De lo contrario escriba NO");
         isbn_p = teclado.nextLine();
 
-        while (!isbn_p.equals("NO")) {            
+        while (!isbn_p.equals("NO")) {
+            Libro lib_pe = pan.quiosco.buscarLibroIsbn(isbn_p);
+            Libro libro = construirLibro(pan, lib_pe);
+            if (!lib_pe.getSaga().isEmpty()) {
+                for (Map.Entry<Integer, Libro> lib_entry : lib_pe.getSaga().entrySet()) {
+                        Integer key = lib_entry.getKey();
+                        Libro libs = lib_entry.getValue();
+                        System.out.print("Código :" + key + " ");
+                        System.out.println(libs.toString());
+                }
                 System.out.println("Si desea agrear un libro de la lista de saga "
-                        + "escriba SI de lo contario NO");
-                isbn_s = teclado.nextLine();
-                while (!isbn_s.equals("NO")) {
-                    for (Libro lib : pan.quiosco.getLibrosDisponibles().get(isbn_p).getSaga().values()) {
-                        System.out.println(lib.toString());
-                    }
-                    System.out.println("Escriba el isbn del libro de saga que desea"
-                            + " agregar al prestamo. Si no desea agregar mas escriba NO");
-                    isbn_s = teclado.nextLine();
-                    if (!isbn_s.equals("NO")) {
-                        isbn_saga.put(acum, isbn_s);
-                        acum++;
-                    }
-                }            
+                        + "escriba CODIGO de lo contrario -1");
+                isbn_s = teclado.nextInt();
+                while (isbn_s != -1) {
+                    libro.getSaga().put(isbn_s, construirLibro(pan,lib_pe.getSaga().get(isbn_s)));
+                    System.out.println("Si desea agregar otro libro escriba el"
+                            + " CODIGO. Si no escriba -1");
+                    isbn_s = teclado.nextInt();
+                }
+            }
             //Agregar libro
-            //pan.quiosco.agregarLibro(isbn_p, isbn_saga );
+            EAgregarLibroEnPrestamo errorAgregar = pan.quiosco.agregarLibros(libro);
+            
+            System.out.println(errorAgregar.toString());
             
             System.out.println("Si desea agregar un nuevo libro escriba el Isbn"
                     + "De lo contrario escriba NO");
             isbn_p = teclado.nextLine();
         }
 
+    }
+
+    public static Libro construirLibro(PantallaKiosco pan, Libro lib_pe) {
+        if (lib_pe instanceof PaperBook) {
+            PaperBook lib = (PaperBook) lib_pe;
+            return new PaperBook(lib.getUbicacion(), lib.getPrecioPapeleria(), lib.getIsbn(), 1, lib.getPrecioBase(), lib.getNombre(), lib.getNumeroImagenes(), lib.getNumeroVideos());
+        } else if (lib_pe instanceof EBookImage) {
+            EBookImage lib = (EBookImage) lib_pe;
+            return new EBookImage(lib.getPrecioPorImagen(), lib.getSitioDescarga(), lib.getIsbn(), 1, lib.getPrecioBase(), lib.getNombre(), lib.getNumeroImagenes(), lib.getNumeroVideos());
+        } else if (lib_pe instanceof EBookVideo) {
+            EBookVideo lib = (EBookVideo) lib_pe;
+            return new EBookVideo(lib.getPrecioPorVideo(), lib.getSitioDescarga(), lib.getIsbn(), 1, lib.getPrecioBase(), lib.getNombre(), lib.getNumeroImagenes(), lib.getNumeroVideos());
+        }
+        return null;
     }
 }

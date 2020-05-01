@@ -28,6 +28,8 @@ public class Prestamo {
     public Prestamo(LocalDate fechaHora, int numero) {
         this.fechaHora = fechaHora;
         this.numero = numero;
+        this.pagoBillete = new HashMap();
+        this.librosEnPrestamo = new HashMap();
     }
 
     public LocalDate getFechaHora() {

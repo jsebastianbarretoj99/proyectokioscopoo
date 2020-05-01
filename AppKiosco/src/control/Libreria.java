@@ -151,6 +151,7 @@ public class Libreria {
                 ob.setTipo("EBV");
             }
             lista.put(lib.getIsbn(), ob);
+            ob.setSaga(lib.getSaga());
         }
         return lista;
     }
@@ -180,12 +181,11 @@ public class Libreria {
                             lib_p.getSaga().put(key, libs);
                         }
                     }
-
                 } else {
                     this.prestamoActual.getLibrosEnPrestamo().put(lib_in.getIsbn(), lib_in);
                 }
                 // punto 4 a IV c I
-                errorAgregar.setValorLibrosSaga(totalSaga(saga));
+                errorAgregar.setValorLibrosSaga(totalSaga(lib_in.getSaga()));
             } else {
                 errorAgregar.setError("No hay unidades suficientes para el prestamo del libro solicitado");
                 errorAgregar.setValorLibrosSaga(0);
@@ -195,13 +195,13 @@ public class Libreria {
             errorAgregar.setValorLibrosSaga(0);
         }
         errorAgregar.setTotalLibros(totalLibrosPrestamo());
-        errorAgregar.setTotalLibrosSaga(totalLibrosSaga(lib));
+        errorAgregar.setTotalLibrosSaga(totalLibrosSaga(lib_in));
         errorAgregar.setValorTotalPrestamo(totalPrestamo());
         return errorAgregar;
     }
 
     //Punto 4 a I 1
-    private Libro buscarLibroIsbn(String isbn_p) {
+    public Libro buscarLibroIsbn(String isbn_p) {
         return this.librosDisponibles.get(isbn_p);
     }
 
@@ -218,7 +218,7 @@ public class Libreria {
         return false;
     }
 
-    //Punto saga 
+    //Punto saga verificamos los libros de la saga ingresados
     private String verificarSaga(Libro lib, Libro lib_ver) {
         String error = " ";
         boolean flag = true;
@@ -249,7 +249,7 @@ public class Libreria {
         return error;
     }
 
-    //Punto saga    
+    //Punto saga verificamos las unididades disponibles para los libros de la saga 
     private boolean unidadesDisponiblesLibrosSaga(String isbn_p, Libro lib_ver) {
         int acum = 0;
         if (this.prestamoActual.getLibrosEnPrestamo().containsKey(isbn_p)) {
@@ -309,14 +309,19 @@ public class Libreria {
     private int totalLibrosPrestamo() {
         int tot = 0;
         for (Libro lib : this.prestamoActual.getLibrosEnPrestamo().values()) {
-            tot += (lib.getSaga().size() + 1);
+            tot += lib.getUnidadesDisponibles();
+            tot += totalLibrosSaga(lib);
         }
         return tot;
     }
 
     // punto 4 a V 3 a
     private int totalLibrosSaga(Libro libro) {
-        return libro.getSaga().size();
+        int tot =0;
+        for (Libro libs : libro.getSaga().values()) {
+            tot += libs.getUnidadesDisponibles();
+        }
+        return tot;
     }
 
     // punto 4 a iv c i
