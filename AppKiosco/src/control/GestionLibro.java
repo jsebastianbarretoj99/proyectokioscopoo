@@ -31,22 +31,22 @@ public class GestionLibro {
         HashMap<Integer, Libro> saga           = new HashMap<>();
         HashMap<Integer, Descuento> descuento  = new HashMap<>();
         
-        PaperBook pb1 = new PaperBook("100", 20000, "H7", 10, 25000, "Harry Potter y las Reliquias de la Muerte", 0, 0);
-        PaperBook pb2 = new PaperBook("101", 20000, "H6", 5, 30000, "Harry Potter y el Principe Mestizo", 0, 0);
-        PaperBook pb3 = new PaperBook("104", 20000, "H1", 1, 20000, "Harry Potter y la Piedra filosofal", 0, 0);
-        PaperBook pb4 = new PaperBook("102", 20000, "H5", 8, 35000, "Harry Potter y la Orden del Fenix", 0, 0);
-        PaperBook pb5 = new PaperBook("103", 20000, "H2", 10, 15000, "Harry Potter y la camara Secreta", 0, 0);
+        PaperBook pb7 = new PaperBook("100", 20000, "H7", 10, 25000, "Harry Potter y las Reliquias de la Muerte", 0, 0);
+        PaperBook pb6 = new PaperBook("101", 20000, "H6", 5, 30000, "Harry Potter y el Principe Mestizo", 0, 0);
+        PaperBook pb1 = new PaperBook("104", 20000, "H1", 1, 20000, "Harry Potter y la Piedra filosofal", 0, 0);
+        PaperBook pb5 = new PaperBook("102", 20000, "H5", 8, 35000, "Harry Potter y la Orden del Fenix", 0, 0);
+        PaperBook pb2 = new PaperBook("103", 20000, "H2", 10, 15000, "Harry Potter y la camara Secreta", 0, 0);
         
-        saga.put(1, pb3);
-        saga.put(2, pb5);
-        saga.put(5, pb4);
+        saga.put(1, pb1);
+        saga.put(2, pb2);
+        saga.put(5, pb5);
         saga.put(6, pb2);
-        saga.put(7, pb1);        
+        saga.put(7, pb1);
         
-        pb2.setSaga(saga);
-        pb3.setSaga(saga);
-        pb4.setSaga(saga);
-        pb5.setSaga(saga);
+        pb2.setSaga(saga);        
+        pb5.setSaga(saga); 
+        pb6.setSaga(saga);
+        pb7.setSaga(saga);
         
         PorSaga ps1 = new PorSaga(1, 0.10);
         PorSaga ps2 = new PorSaga(2, 0.05);
@@ -63,30 +63,30 @@ public class GestionLibro {
         descuento.put(2,ps3);
         descuento.put(3,ps4);
         
-        pb3.setDescuentos(descuento);
-        pb4.setDescuentos(descuento);
+        pb5.setDescuentos(descuento);
+        pb6.setDescuentos(descuento);
         
         descuento.put(4,ps5);
 
-        pb5.setDescuentos(descuento);
+        pb7.setDescuentos(descuento);
         
         librosDispo.put(pb1.getIsbn(), pb1);
         librosDispo.put(pb2.getIsbn(), pb2);
-        librosDispo.put(pb3.getIsbn(), pb3);
-        librosDispo.put(pb4.getIsbn(), pb4);
         librosDispo.put(pb5.getIsbn(), pb5);
+        librosDispo.put(pb6.getIsbn(), pb6);
+        librosDispo.put(pb7.getIsbn(), pb7);
         
         saga.clear();
         descuento.clear();
         
         // Solo un libro 
-        PaperBook pb6 = new PaperBook("110", 30000, "L0", 6, 40000, "Los Miserables", 0, 0);
-        PaperBook pb7 = new PaperBook("120", 40000, "O0", 10, 30000, "Orgullo y Prejuicio", 0, 0);
-        PaperBook pb8 = new PaperBook("130", 10000, "O0", 10, 50000, "La isla bajo el mar", 0, 0);
+        PaperBook pb8 = new PaperBook("110", 30000, "L0", 6, 40000, "Los Miserables", 0, 0);
+        PaperBook pb9 = new PaperBook("120", 40000, "O0", 10, 30000, "Orgullo y Prejuicio", 0, 0);
+        PaperBook pb10 = new PaperBook("130", 10000, "O0", 10, 50000, "La isla bajo el mar", 0, 0);
         
-        librosDispo.put(pb6.getIsbn(), pb6);
-        librosDispo.put(pb7.getIsbn(), pb7);
         librosDispo.put(pb8.getIsbn(), pb8);
+        librosDispo.put(pb9.getIsbn(), pb9);
+        librosDispo.put(pb10.getIsbn(), pb10);
        
         
         // EbookImage 

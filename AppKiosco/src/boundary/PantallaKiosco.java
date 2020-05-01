@@ -9,7 +9,6 @@ import control.Libreria;
 import dto.IniciarPrestamo;
 import dto.ListarLibros;
 import entity.Libro;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 

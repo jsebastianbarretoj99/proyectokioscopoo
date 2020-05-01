@@ -39,5 +39,12 @@ public class Billete {
     public void setDenominacion(Denominacion denominacion) {
         this.denominacion = denominacion;
     }
+
+    @Override
+    public String toString() {
+        return "Billete{" + "cantidad=" + cantidad + ", denominacion=" + denominacion + '}';
+    }
+    
+    
    
 }
