@@ -17,12 +17,11 @@ public enum Denominacion {
     DIEZMIL(10000);
 
     private double valor;
-   
-        
         
     private Denominacion(double valor) {
         this.valor = valor;
     }
+    
 
     public double getValor() {
         return valor;
