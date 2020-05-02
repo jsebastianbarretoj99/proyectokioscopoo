@@ -128,11 +128,7 @@ public class Libreria {
         for (Libro lib : this.librosDisponibles.values()) {
             acom += lib.getUnidadesDisponibles();
         }
-        if (acom > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return acom > 0;
     }
 
     // Punto 3 
@@ -212,10 +208,7 @@ public class Libreria {
                 return true;
             }
         }
-        if (lib_ver.getUnidadesDisponibles() > 0) {
-            return true;
-        }
-        return false;
+        return lib_ver.getUnidadesDisponibles() > 0;
     }
 
     //Punto saga verificamos los libros de la saga ingresados
@@ -262,10 +255,7 @@ public class Libreria {
                 }
             }
         }
-        if (lib_ver.getUnidadesDisponibles() > acum) {
-            return true;
-        }
-        return false;
+        return lib_ver.getUnidadesDisponibles() > acum;
     }
 
     // Punto 4 a IV 1 a, b i ii
@@ -375,7 +365,6 @@ public class Libreria {
         pago.setValorPrestamo(totalPrestamo());
         // 6 a II 4
         pago.setSaldoFaltante(saldoFaltante());
-
         return pago;
     }
 
@@ -387,7 +376,7 @@ public class Libreria {
     // 6 a II 2 a 
     private double totalIntroducido(HashMap<Denominacion, Billete> listaBilletes) {
         double total = 0;
-        for (Billete bil : listaBilletes.values()) {
+        for(Billete bil : listaBilletes.values()) {
             total += (bil.getCantidad() * bil.getDenominacion().getValor());
         }
         return total;

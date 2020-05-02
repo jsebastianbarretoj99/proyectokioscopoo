@@ -7,12 +7,13 @@ package entity;
 
 /**
  *
- * @author vale-
+ * @author Juan Sebastian Barreto Jimenez Juan Camilo Devia Bastos Nicolas
+ * Javier Ramirez Beltran Valentina López Suárez
  */
-public class PaperBook extends Libro{
-    
+public class PaperBook extends Libro {
+
     private String ubicacion;
-    private double precioPapeleria; 
+    private double precioPapeleria;
 
     public PaperBook(String isbn, int unidadesDisponibles, double precioBase, String nombre, int numeroImagenes, int numeroVIdeos) {
         super(isbn, unidadesDisponibles, precioBase, nombre, numeroImagenes, numeroVIdeos);
@@ -45,5 +46,5 @@ public class PaperBook extends Libro{
     public double precioTotal() {
         return super.getPrecioBase() + this.precioPapeleria;
     }
-    
+
 }
