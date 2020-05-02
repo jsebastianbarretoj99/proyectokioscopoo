@@ -25,6 +25,7 @@ import entity.Prestamo;
 import enumaration.Denominacion;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -134,7 +135,7 @@ public class Libreria {
         }
     }
 
-    // 3 
+    // Punto 3 
     public HashMap<String, ListarLibros> listarLibros() {
         HashMap<String, ListarLibros> lista = new HashMap<>();
         for (Libro lib : this.librosDisponibles.values()) {
@@ -150,29 +151,41 @@ public class Libreria {
                 ob.setTipo("EBV");
             }
             lista.put(lib.getIsbn(), ob);
+            ob.setSaga(lib.getSaga());
         }
         return lista;
     }
 
     //Punto 4 
-    public HashMap<Integer, Libro> buscarSaga(String isbn) {
-        Libro lib = this.librosDisponibles.get(isbn);
-        return lib.getSaga();
-    }
-
-    // Punto 4 
-    public EAgregarLibroEnPrestamo agregarLibro(String isbn, HashMap<Integer, Libro> saga) {
+    public EAgregarLibroEnPrestamo agregarLibros(Libro lib_in) {
         EAgregarLibroEnPrestamo errorAgregar = new EAgregarLibroEnPrestamo();
-        Libro lib = buscarLibroIsbn(isbn);
-        lib.setSaga(saga);
-        // punto 4 a I
-        if (lib != null) {
-            // punto 4 a II
-            if (unidadesDisponiblesLibros(isbn)) {
+        Libro lib_ver = buscarLibroIsbn(lib_in.getIsbn());
+        //Punto 4 a I 
+        if (lib_ver != null) {
+            //Punto 4 a II
+            if (unidadesDisponiblesLibros(lib_in.getIsbn(), lib_ver)) {
+
+                errorAgregar.setError(verificarSaga(lib_in, lib_ver));
                 // punto 4 a III
-                this.prestamoActual.getLibrosEnPrestamo().put(lib.getIsbn(), lib);
+                if (this.prestamoActual.getLibrosEnPrestamo().containsKey(lib_in.getIsbn())) {
+                    Libro lib_p = this.prestamoActual.getLibrosEnPrestamo().get(lib_in.getIsbn());
+                    lib_p.setUnidadesDisponibles(lib_p.getUnidadesDisponibles() + lib_in.getUnidadesDisponibles());
+                    //Buscamos en la saga del libro en prestamo los libros de la saga actual. 
+                    for (Map.Entry<Integer, Libro> lib_entry : lib_in.getSaga().entrySet()) {
+                        Integer key = lib_entry.getKey();
+                        Libro libs = lib_entry.getValue();
+                        Libro lib_actual = lib_p.getSaga().get(key);
+                        if (lib_actual != null) {
+                            lib_actual.setUnidadesDisponibles(lib_actual.getUnidadesDisponibles() + lib_in.getUnidadesDisponibles());
+                        } else {
+                            lib_p.getSaga().put(key, libs);
+                        }
+                    }
+                } else {
+                    this.prestamoActual.getLibrosEnPrestamo().put(lib_in.getIsbn(), lib_in);
+                }
                 // punto 4 a IV c I
-                errorAgregar.setValorLibrosSaga(totalSaga(saga));
+                errorAgregar.setValorLibrosSaga(totalSaga(lib_in.getSaga()));
             } else {
                 errorAgregar.setError("No hay unidades suficientes para el prestamo del libro solicitado");
                 errorAgregar.setValorLibrosSaga(0);
@@ -182,30 +195,80 @@ public class Libreria {
             errorAgregar.setValorLibrosSaga(0);
         }
         errorAgregar.setTotalLibros(totalLibrosPrestamo());
-        errorAgregar.setTotalLibrosSaga(totalLibrosSaga(lib));
+        errorAgregar.setTotalLibrosSaga(totalLibrosSaga(lib_in));
         errorAgregar.setValorTotalPrestamo(totalPrestamo());
         return errorAgregar;
     }
 
-    //punto 4 a I 1 
-    private Libro buscarLibroIsbn(String isbn_p) {
-        for (Libro lib : this.librosDisponibles.values()) {
-            if (isbn_p.equals(lib.getIsbn())) {
-                return lib;
-            }
-        }
-        return null;
+    //Punto 4 a I 1
+    public Libro buscarLibroIsbn(String isbn_p) {
+        return this.librosDisponibles.get(isbn_p);
     }
 
     // punto 4 I 2
-    private boolean unidadesDisponiblesLibros(String isbn) {
-        Libro lib = this.librosDisponibles.get(isbn);
-        if (lib.getUnidadesDisponibles() > this.prestamoActual.getLibrosEnPrestamo().get(isbn).getUnidadesDisponibles()) {
+    private boolean unidadesDisponiblesLibros(String isbn, Libro lib_ver) {
+        if (this.prestamoActual.getLibrosEnPrestamo().containsKey(isbn)) {
+            if (lib_ver.getUnidadesDisponibles() > this.prestamoActual.getLibrosEnPrestamo().get(isbn).getUnidadesDisponibles()) {
+                return true;
+            }
+        }
+        if (lib_ver.getUnidadesDisponibles() > 0) {
             return true;
         }
         return false;
     }
 
+    //Punto saga verificamos los libros de la saga ingresados
+    private String verificarSaga(Libro lib, Libro lib_ver) {
+        String error = " ";
+        boolean flag = true;
+        //verificar que los isbn se encuentran y si hay unidades disponibles
+        //libro de entrada
+        for (Map.Entry<Integer, Libro> lib_entry : lib.getSaga().entrySet()) {
+            Integer key = lib_entry.getKey();
+            Libro lib_in = lib_entry.getValue();
+            // Saga del libro en libros disponibles
+            for (Libro lib_saga : lib_ver.getSaga().values()) {
+                //Hace parte de la saga 
+                if (lib_in.getIsbn().equals(lib_saga.getIsbn())) {
+                    flag = false;
+                    //Unidades disponibles 
+                    if (!unidadesDisponiblesLibrosSaga(lib.getIsbn(), lib_ver)) {
+                        error += lib_in.getIsbn() + " no hay unidades disponibles, ";
+                        lib.getSaga().remove(key);
+                    }
+                }
+            }
+            if (flag) {
+                error += lib_in.getIsbn() + " no existe, ";
+                lib.getSaga().remove(key);
+            } else {
+                flag = true;
+            }
+        }
+        return error;
+    }
+
+    //Punto saga verificamos las unididades disponibles para los libros de la saga 
+    private boolean unidadesDisponiblesLibrosSaga(String isbn_p, Libro lib_ver) {
+        int acum = 0;
+        if (this.prestamoActual.getLibrosEnPrestamo().containsKey(isbn_p)) {
+            acum += this.prestamoActual.getLibrosEnPrestamo().get(isbn_p).getUnidadesDisponibles();
+        }
+        for (Libro lib_pre : this.prestamoActual.getLibrosEnPrestamo().values()) {
+            for (Libro lib_saga : lib_pre.getSaga().values()) {
+                if (isbn_p.equals(lib_saga.getIsbn())) {
+                    acum += lib_saga.getUnidadesDisponibles();
+                }
+            }
+        }
+        if (lib_ver.getUnidadesDisponibles() > acum) {
+            return true;
+        }
+        return false;
+    }
+
+    // Punto 4 a IV 1 a, b i ii
     private double usePrecioTotal(Libro lib) {
         if (lib instanceof PaperBook) {
             PaperBook auxL = (PaperBook) lib;
@@ -219,10 +282,13 @@ public class Libreria {
         }
     }
 
+    //Buscar el libro de la saga : verificar que si hace parte del descueto del 
+    //libro.
     private boolean buscarLibroSaga(int key, HashMap<Integer, Libro> saga) {
         return saga.containsKey(key);
     }
 
+    // Suma de descuentos: punto 4 a iv ii 1 2 
     private double sumaDescuentos(Libro lib, double precioT) {
         double totalDescuentos = 0;
         for (Descuento des : lib.getDescuentos().values()) {
@@ -243,16 +309,22 @@ public class Libreria {
     private int totalLibrosPrestamo() {
         int tot = 0;
         for (Libro lib : this.prestamoActual.getLibrosEnPrestamo().values()) {
-            tot += (lib.getSaga().size() + 1);
+            tot += lib.getUnidadesDisponibles();
+            tot += totalLibrosSaga(lib);
         }
         return tot;
     }
 
     // punto 4 a V 3 a
     private int totalLibrosSaga(Libro libro) {
-        return libro.getSaga().size();
+        int tot =0;
+        for (Libro libs : libro.getSaga().values()) {
+            tot += libs.getUnidadesDisponibles();
+        }
+        return tot;
     }
 
+    // punto 4 a iv c i
     private double totalSaga(HashMap<Integer, Libro> saga) {
         double precioT = 0;
         for (Libro libro : saga.values()) {
@@ -260,8 +332,8 @@ public class Libreria {
         }
         return precioT;
     }
-    // punto 4 a V 5 a ; Punto 6 a II 3 a
 
+    // punto 4 a V 5 a ; Punto 6 a II 3 a
     private double totalPrestamo() {
         double precioT = 0;
         for (Libro lib : this.prestamoActual.getLibrosEnPrestamo().values()) {
@@ -285,7 +357,6 @@ public class Libreria {
     public PagoPrestamo introducirBillete(Denominacion demo) {
         Billete bil;
         PagoPrestamo pago = new PagoPrestamo();
-        int tam;
         // 6 a I 1  
         if (buscarDenominacio(demo, this.dineroAcumulado)) {
             //6 a I 2
@@ -296,7 +367,6 @@ public class Libreria {
                 this.prestamoActual.getPagoBillete().put(demo, new Billete(1, demo));
             }
         }
-
         //6 a II 1 
         pago.setPagoBillete(this.prestamoActual.getPagoBillete());
         // 6 a II 2  
@@ -312,7 +382,6 @@ public class Libreria {
     //6 a I 1 
     private boolean buscarDenominacio(Denominacion demo, HashMap<Denominacion, Billete> lista) {
         return lista.containsKey(demo);
-
     }
 
     // 6 a II 2 a 

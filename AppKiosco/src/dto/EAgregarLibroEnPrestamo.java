@@ -15,7 +15,18 @@ public class EAgregarLibroEnPrestamo {
     private int totalLibrosSaga;
     private double valorLibrosSaga;
     private double valorTotalPrestamo;
+    
+    public EAgregarLibroEnPrestamo() {
+    }
 
+    public EAgregarLibroEnPrestamo(String error, int totalLibros, int totalLibrosSaga, double valorLibrosSaga, double valorTotalPrestamo) {
+        this.error = error;
+        this.totalLibros = totalLibros;
+        this.totalLibrosSaga = totalLibrosSaga;
+        this.valorLibrosSaga = valorLibrosSaga;
+        this.valorTotalPrestamo = valorTotalPrestamo;
+    }
+    
     public String getError() {
         return error;
     }
@@ -56,15 +67,12 @@ public class EAgregarLibroEnPrestamo {
         this.valorTotalPrestamo = valorTotalPrestamo;
     }
 
-    public EAgregarLibroEnPrestamo() {
+    @Override
+    public String toString() {
+        return "EAgregarLibroEnPrestamo{" + "error=" + error + ", totalLibros=" + totalLibros + ", totalLibrosSaga=" + totalLibrosSaga + ", valorLibrosSaga=" + valorLibrosSaga + ", valorTotalPrestamo=" + valorTotalPrestamo + '}';
     }
-
-    public EAgregarLibroEnPrestamo(String error, int totalLibros, int totalLibrosSaga, double valorLibrosSaga, double valorTotalPrestamo) {
-        this.error = error;
-        this.totalLibros = totalLibros;
-        this.totalLibrosSaga = totalLibrosSaga;
-        this.valorLibrosSaga = valorLibrosSaga;
-        this.valorTotalPrestamo = valorTotalPrestamo;
-    }
+    
+    
+    
     
 }

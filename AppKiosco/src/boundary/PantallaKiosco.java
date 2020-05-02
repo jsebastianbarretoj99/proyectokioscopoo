@@ -6,6 +6,7 @@
 package boundary;
 
 import control.Libreria;
+<<<<<<< HEAD
 import dto.AcabarPrestamo;
 import dto.IniciarPrestamo;
 import dto.ListarLibros;
@@ -15,6 +16,16 @@ import entity.Libro;
 import enumaration.Denominacion;
 import java.util.ArrayList;
 import java.util.HashMap;
+=======
+import dto.EAgregarLibroEnPrestamo;
+import dto.IniciarPrestamo;
+import dto.ListarLibros;
+import entity.EBookImage;
+import entity.EBookVideo;
+import entity.Libro;
+import entity.PaperBook;
+import java.util.Map;
+>>>>>>> 35838dbaba04b5bcbca1da751cddb3c757d2ea03
 import java.util.Scanner;
 
 /**
@@ -67,9 +78,15 @@ public class PantallaKiosco {
                         for (ListarLibros lib : panta.quiosco.listarLibros().values()) {
                             System.out.println(lib.toString());
                         }
+<<<<<<< HEAD
                         listarBilletes(panta);
                         introducirBilletes(panta);
                         System.out.println("Termino el ingreso de los billetes");
+=======
+                        //Continuación Punto 3 y Punto 4 
+                        agregarLibro(panta);
+
+>>>>>>> 35838dbaba04b5bcbca1da751cddb3c757d2ea03
                     } else {
                         System.out.println(pres.getError());
                     }
@@ -121,15 +138,15 @@ public class PantallaKiosco {
     // punto 4 
     public static void agregarLibro(PantallaKiosco pan) {
         Scanner teclado = new Scanner(System.in);
-        String isbn_p = "si", isbn_s;
+        String isbn_p = "si";
+        Integer isbn_s;
         int acum = 0;
-        HashMap<Integer, String> isbn_saga = new HashMap();
-
         System.out.println("Agregue el isbn del libro que desea pedir:"
                 + "De lo contrario escriba NO");
         isbn_p = teclado.nextLine();
 
         while (!isbn_p.equals("NO")) {
+<<<<<<< HEAD
             System.out.println("Si desea agrear un libro de la lista de saga "
                     + "escriba SI de lo contario NO");
             isbn_s = teclado.nextLine();
@@ -148,6 +165,32 @@ public class PantallaKiosco {
             //Agregar libro
             //pan.quiosco.agregarLibro(isbn_p, isbn_saga );
 
+=======
+            Libro lib_pe = pan.quiosco.buscarLibroIsbn(isbn_p);
+            Libro libro = construirLibro(pan, lib_pe);
+            if (!lib_pe.getSaga().isEmpty()) {
+                for (Map.Entry<Integer, Libro> lib_entry : lib_pe.getSaga().entrySet()) {
+                        Integer key = lib_entry.getKey();
+                        Libro libs = lib_entry.getValue();
+                        System.out.print("Código :" + key + " ");
+                        System.out.println(libs.toString());
+                }
+                System.out.println("Si desea agrear un libro de la lista de saga "
+                        + "escriba CODIGO de lo contrario -1");
+                isbn_s = teclado.nextInt();
+                while (isbn_s != -1) {
+                    libro.getSaga().put(isbn_s, construirLibro(pan,lib_pe.getSaga().get(isbn_s)));
+                    System.out.println("Si desea agregar otro libro escriba el"
+                            + " CODIGO. Si no escriba -1");
+                    isbn_s = teclado.nextInt();
+                }
+            }
+            //Agregar libro
+            EAgregarLibroEnPrestamo errorAgregar = pan.quiosco.agregarLibros(libro);
+            
+            System.out.println(errorAgregar.toString());
+            
+>>>>>>> 35838dbaba04b5bcbca1da751cddb3c757d2ea03
             System.out.println("Si desea agregar un nuevo libro escriba el Isbn"
                     + "De lo contrario escriba NO");
             isbn_p = teclado.nextLine();
@@ -155,6 +198,7 @@ public class PantallaKiosco {
 
     }
 
+<<<<<<< HEAD
     //Punto 5 
     public static void listarBilletes(PantallaKiosco panta) {
         HashMap<Integer, Denominacion> listaBilletes;
@@ -204,6 +248,19 @@ public class PantallaKiosco {
                 case 10000:
                     return Denominacion.DIEZMIL;
             }
+=======
+    public static Libro construirLibro(PantallaKiosco pan, Libro lib_pe) {
+        if (lib_pe instanceof PaperBook) {
+            PaperBook lib = (PaperBook) lib_pe;
+            return new PaperBook(lib.getUbicacion(), lib.getPrecioPapeleria(), lib.getIsbn(), 1, lib.getPrecioBase(), lib.getNombre(), lib.getNumeroImagenes(), lib.getNumeroVideos());
+        } else if (lib_pe instanceof EBookImage) {
+            EBookImage lib = (EBookImage) lib_pe;
+            return new EBookImage(lib.getPrecioPorImagen(), lib.getSitioDescarga(), lib.getIsbn(), 1, lib.getPrecioBase(), lib.getNombre(), lib.getNumeroImagenes(), lib.getNumeroVideos());
+        } else if (lib_pe instanceof EBookVideo) {
+            EBookVideo lib = (EBookVideo) lib_pe;
+            return new EBookVideo(lib.getPrecioPorVideo(), lib.getSitioDescarga(), lib.getIsbn(), 1, lib.getPrecioBase(), lib.getNombre(), lib.getNumeroImagenes(), lib.getNumeroVideos());
+        }
+>>>>>>> 35838dbaba04b5bcbca1da751cddb3c757d2ea03
         return null;
     }
 }
