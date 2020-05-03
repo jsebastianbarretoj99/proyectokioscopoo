@@ -10,6 +10,7 @@ import dto.IniciarPrestamo;
 import dto.ListarLibros;
 import dto.ReporteDiario;
 import dto.ReporteLibroDiario;
+import entity.Billete;
 import entity.EBookImage;
 import entity.EBookVideo;
 import entity.Libro;
@@ -67,7 +68,11 @@ public class PantallaKiosco {
                         agregarLibro(panta);
 
                         listarBilletes(panta);
+<<<<<<< HEAD
                         //introducirBilletes(panta);
+=======
+                        introducirBilletes(panta);
+>>>>>>> 35c9e0075ebcbe9f47f4b8c3469aa088197d29ad
                         System.out.println("Termino el ingreso de los billetes");
 
                     } else {
@@ -153,17 +158,30 @@ public class PantallaKiosco {
                     System.out.println("No ingresaste una opción valida");
                     break;
             }
+<<<<<<< HEAD
             teclado = new Scanner(System.in);
+=======
+>>>>>>> 35c9e0075ebcbe9f47f4b8c3469aa088197d29ad
             System.out.println("Menú de Prestamos de libros en quiosco");
             // punto 2 a 
             System.out.println("1. Iniciar préstamo.");
             // punto 7 a 
             System.out.println("2. Terminar prestamo.");
             // punto 8 a 
+<<<<<<< HEAD
             System.out.println("3. Reporte diario.");
             System.out.println("4. Salir");
             System.out.println("Digite una opcion");
             opcion = teclado.nextInt();
+=======
+            System.out.println("3. Devolver Billetes");
+            // punto 9 a 
+            System.out.println("4. Reporte diario.");
+            System.out.println("5. Salir");
+            System.out.println("Digite una opcion");
+            opcion = teclado.nextInt();
+
+>>>>>>> 35c9e0075ebcbe9f47f4b8c3469aa088197d29ad
         }
     }
 
@@ -196,16 +214,16 @@ public class PantallaKiosco {
                         isbn_s = teclado.nextInt();
                     }
                 }
-                //Agregar libro
-                EAgregarLibroEnPrestamo errorAgregar = pan.quiosco.agregarLibros(libro);
-                System.out.println(errorAgregar.toString());
-                System.out.println("Si desea agregar un nuevo libro escriba el Isbn"
-                        + "De lo contrario escriba NO");
-                teclado = new Scanner(System.in);
-                isbn_p = teclado.nextLine();
             }
-
+            //Agregar libro
+            EAgregarLibroEnPrestamo errorAgregar = pan.quiosco.agregarLibros(libro);
+            System.out.println(errorAgregar.toString());
+            System.out.println("Si desea agregar un nuevo libro escriba el Isbn"
+                    + "De lo contrario escriba NO");
+            teclado = new Scanner(System.in);
+            isbn_p = teclado.nextLine();
         }
+
     }
     //Punto 5 
 
@@ -213,11 +231,12 @@ public class PantallaKiosco {
         HashMap<Integer, Denominacion> listaBilletes;
         listaBilletes = panta.quiosco.listarBillete();
         System.out.println("Numeraciones posibles para introducir :");
-        for (Denominacion bil : listaBilletes.values()) {
-            System.out.println(bil.getValor());
+        for (Denominacion dem : listaBilletes.values()) {
+            System.out.println(dem);
         }
     }
 
+    //punto 6 
     public static void introducirBilletes(PantallaKiosco panta) {
         PagoPrestamo p;
         Scanner teclado = new Scanner(System.in);
@@ -229,18 +248,17 @@ public class PantallaKiosco {
             System.out.println("Ingrese una nominación del billete, finalice con '-1' ");
             dem_p = teclado.nextLine();
         }
-        while (dem_p.equals("-1")) {
+        while (!dem_p.equals("-1")) {
+            HashMap<Denominacion, Billete> pBil;
             p = panta.quiosco.introducirBillete(introducirNumeracion(dem_p));
-            if (p.getTotalIntro() == 0.0) {
-                System.out.println("La denominacion no es valida");
-            } else {
-                System.out.println(p.toString());
-            }
+            pBil = p.getPagoBillete();
+            System.out.println("Billetes Ingresados:");
+            System.out.println(pBil.keySet());
+            System.out.println(p.toString());
             System.out.println("Ingrese una nominación del billete, finalice con '-1' ");
             dem_p = teclado.nextLine();
         }
     }
-
 
     public static Denominacion introducirNumeracion(String valor) {
         switch (valor) {
@@ -256,7 +274,6 @@ public class PantallaKiosco {
         return null;
     }
 
-
     public static Libro construirLibro(PantallaKiosco pan, Libro lib_pe) {
         if (lib_pe instanceof PaperBook) {
             PaperBook lib = (PaperBook) lib_pe;
@@ -270,6 +287,5 @@ public class PantallaKiosco {
         }
         return null;
     }
-
 
 }
