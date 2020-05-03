@@ -38,7 +38,7 @@ public class PantallaKiosco {
         AcabarPrestamo acabP;
         ReporteDiario rP = new ReporteDiario();
         int opcion;
-        boolean ver = true, noTermino = false, prestamoUno = false, vern = true;
+        boolean ver = true, prestamoUno = false, vern = true;
         // Punto 1 d: Se inicia el día. 
         panta.quiosco = new Libreria();
         Scanner teclado = new Scanner(System.in);
@@ -66,15 +66,10 @@ public class PantallaKiosco {
                         }
                         //Continuación Punto 3 y Punto 4 
                         agregarLibro(panta);
-
                         listarBilletes(panta);
-<<<<<<< HEAD
-                        //introducirBilletes(panta);
-=======
                         introducirBilletes(panta);
->>>>>>> 35c9e0075ebcbe9f47f4b8c3469aa088197d29ad
                         System.out.println("Termino el ingreso de los billetes");
-
+                        ver =  false;
                     } else {
                         System.out.println(pres.getError());
                     }
@@ -87,7 +82,6 @@ public class PantallaKiosco {
                         System.out.println("No se ha iniciado un prestamo.");
                     } else {
                         acabP = panta.quiosco.terminarPrestamo();
-                        noTermino = true;
                         // punto 7 b V
                         acabP = panta.quiosco.terminarPrestamo();
                         System.out.println("Acabar Prestamo:");
@@ -111,6 +105,9 @@ public class PantallaKiosco {
                             System.out.println("Total de las vueltas = " + acabP.getValorTVueltas());
                         }
                         ver = true;
+                        if(acabP.getError() == null){
+                            prestamoUno = true;
+                        }
                     }
                     break;
 
@@ -158,30 +155,17 @@ public class PantallaKiosco {
                     System.out.println("No ingresaste una opción valida");
                     break;
             }
-<<<<<<< HEAD
             teclado = new Scanner(System.in);
-=======
->>>>>>> 35c9e0075ebcbe9f47f4b8c3469aa088197d29ad
             System.out.println("Menú de Prestamos de libros en quiosco");
             // punto 2 a 
             System.out.println("1. Iniciar préstamo.");
             // punto 7 a 
             System.out.println("2. Terminar prestamo.");
             // punto 8 a 
-<<<<<<< HEAD
             System.out.println("3. Reporte diario.");
             System.out.println("4. Salir");
             System.out.println("Digite una opcion");
             opcion = teclado.nextInt();
-=======
-            System.out.println("3. Devolver Billetes");
-            // punto 9 a 
-            System.out.println("4. Reporte diario.");
-            System.out.println("5. Salir");
-            System.out.println("Digite una opcion");
-            opcion = teclado.nextInt();
-
->>>>>>> 35c9e0075ebcbe9f47f4b8c3469aa088197d29ad
         }
     }
 
@@ -251,9 +235,11 @@ public class PantallaKiosco {
         while (!dem_p.equals("-1")) {
             HashMap<Denominacion, Billete> pBil;
             p = panta.quiosco.introducirBillete(introducirNumeracion(dem_p));
-            pBil = p.getPagoBillete();
             System.out.println("Billetes Ingresados:");
-            System.out.println(pBil.keySet());
+            
+            for (Billete bil : p.getPagoBillete().values()) {
+                System.out.println(bil.toString());
+            }
             System.out.println(p.toString());
             System.out.println("Ingrese una nominación del billete, finalice con '-1' ");
             dem_p = teclado.nextLine();
@@ -265,7 +251,7 @@ public class PantallaKiosco {
             case "CIENMIL":
                 return Denominacion.CIENMIL;
             case "CINCUENTAMIL":
-                return Denominacion.CICUENTAMIL;
+                return Denominacion.CINCUENTAMIL;
             case "VEINTEMIL":
                 return Denominacion.VEINTEMIL;
             case "DIEZMIL":

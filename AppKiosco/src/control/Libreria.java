@@ -93,10 +93,10 @@ public class Libreria {
     // 1 b II
     private void crearColeccionBilletes() {
         this.dineroAcumulado = new HashMap();
-        this.dineroAcumulado.put(Denominacion.CIENMIL, new Billete(10, Denominacion.CIENMIL));
-        this.dineroAcumulado.put(Denominacion.CICUENTAMIL, new Billete(20, Denominacion.CICUENTAMIL));
-        this.dineroAcumulado.put(Denominacion.VEINTEMIL, new Billete(4, Denominacion.VEINTEMIL));
-        this.dineroAcumulado.put(Denominacion.DIEZMIL, new Billete(7, Denominacion.DIEZMIL));
+        this.dineroAcumulado.put(Denominacion.CIENMIL, new Billete(0, Denominacion.CIENMIL));
+        this.dineroAcumulado.put(Denominacion.CINCUENTAMIL, new Billete(0, Denominacion.CINCUENTAMIL));
+        this.dineroAcumulado.put(Denominacion.VEINTEMIL, new Billete(0, Denominacion.VEINTEMIL));
+        this.dineroAcumulado.put(Denominacion.DIEZMIL, new Billete(1, Denominacion.DIEZMIL));
     }
 
     //punto 2
@@ -164,7 +164,6 @@ public class Libreria {
         if (lib_ver != null) {
             //Punt1 4 a II
             if (unidadesDisponiblesLibros(lib_in.getIsbn(), lib_ver)) {
-
                 errorAgregar.setError(verificarSaga(lib_in, lib_ver));
                 // punto 4 a III
                 if (this.prestamoActual.getLibrosEnPrestamo().containsKey(lib_in.getIsbn())) {
@@ -186,16 +185,14 @@ public class Libreria {
                 }
                 // punto 4 a IV c I
                 errorAgregar.setValorLibrosSaga(totalSaga(lib_in.getSaga()));
+                errorAgregar.setTotalLibrosSaga(totalLibrosSaga(lib_in));
             } else {
                 errorAgregar.setError("No hay unidades suficientes para el prestamo del libro solicitado");
-                errorAgregar.setValorLibrosSaga(0);
             }
         } else {
             errorAgregar.setError("El libro solicitado no existe");
-            errorAgregar.setValorLibrosSaga(0);
         }
         errorAgregar.setTotalLibros(totalLibrosPrestamo());
-        errorAgregar.setTotalLibrosSaga(totalLibrosSaga(lib_in));
         errorAgregar.setValorTotalPrestamo(totalPrestamo());
         return errorAgregar;
     }
@@ -207,11 +204,8 @@ public class Libreria {
 
     // punto 4 I 2
     private boolean unidadesDisponiblesLibros(String isbn, Libro lib_ver) {
-        if (this.prestamoActual.getLibrosEnPrestamo().containsKey(isbn)) {
-            if (lib_ver.getUnidadesDisponibles() > this.prestamoActual.getLibrosEnPrestamo().get(isbn).getUnidadesDisponibles()) {
-                return true;
-            }
-        }
+        if (this.prestamoActual.getLibrosEnPrestamo().containsKey(isbn))
+            return lib_ver.getUnidadesDisponibles() > this.prestamoActual.getLibrosEnPrestamo().get(isbn).getUnidadesDisponibles();
         return lib_ver.getUnidadesDisponibles() > 0;
     }
 
@@ -219,6 +213,7 @@ public class Libreria {
     private String verificarSaga(Libro lib, Libro lib_ver) {
         String error = " ";
         List<Integer> llaves = new ArrayList<>();
+        List<Integer> llaves_unidades = new ArrayList<>();
         //verificar que los isbn se encuentran y si hay unidades disponibles
         //libro de entrada
         for (Map.Entry<Integer, Libro> lib_entry : lib.getSaga().entrySet()) {
@@ -229,10 +224,10 @@ public class Libreria {
                 for (Libro lib_saga : lib_ver.getSaga().values()) {
                     //Hace parte de la saga 
                     if (lib_in.getIsbn().equals(lib_saga.getIsbn())) {
-                        //Unidades disponibles 
-                        if (!unidadesDisponiblesLibrosSaga(lib.getIsbn(), lib_ver)) {
+                        //Unidades disponibles RR
+                        if (!unidadesDisponiblesLibrosSaga( lib_in.getIsbn(), lib_ver)) {
                             error += lib_in.getIsbn() + " no hay unidades disponibles, ";
-                            lib.getSaga().remove(key);
+                            llaves_unidades.add(key);
                         }
                     }
                 }
@@ -240,12 +235,15 @@ public class Libreria {
                 llaves.add(key);
             }
         }
-        if (lib_ver.getSaga().isEmpty()) {
+        if (lib_ver.getSaga().isEmpty() || llaves.isEmpty()) {
             error = null;
         } else {
             error += " El/los código(s) no hacen partes de la saga : ";
             for (Integer llav : llaves) {
                 error += llav + " ";
+                lib.getSaga().remove(llav);
+            }
+            for(Integer llav : llaves_unidades){
                 lib.getSaga().remove(llav);
             }
         }
@@ -265,7 +263,7 @@ public class Libreria {
                 }
             }
         }
-        return lib_ver.getUnidadesDisponibles() > acum;
+        return buscarLibroIsbn(isbn_p).getUnidadesDisponibles() > acum;
     }
 
     // Punto 4 a IV 1 a, b i ii
@@ -320,7 +318,6 @@ public class Libreria {
         int tot = 0;
         if(libro == null)
             return 0;
-        
         for (Libro libs : libro.getSaga().values()) {
             tot += libs.getUnidadesDisponibles();
         }
@@ -350,8 +347,10 @@ public class Libreria {
     // punto 5 
     public HashMap<Integer, Denominacion> listarBillete() {
         HashMap<Integer, Denominacion> deno = new HashMap<>();
+        int i = 0;
         for (Billete bil : this.dineroAcumulado.values()) {
-            deno.put(deno.size(), bil.getDenominacion());
+            deno.put(i, bil.getDenominacion());
+            i++;
         }
         return deno;
     }

@@ -24,7 +24,7 @@ public class GestionLibro {
         HashMap<String, Libro> librosDispo = new HashMap<>();
         HashMap<Integer, Libro> saga = new HashMap<>();
         HashMap<Integer, Descuento> descuento = new HashMap<>();
-
+        
         PaperBook pb7 = new PaperBook("100", 20000, "H7", 10, 25000, "Harry Potter y las Reliquias de la Muerte", 0, 0);
         PaperBook pb6 = new PaperBook("101", 20000, "H6", 5, 30000, "Harry Potter y el Principe Mestizo", 0, 0);
         PaperBook pb1 = new PaperBook("104", 20000, "H1", 1, 20000, "Harry Potter y la Piedra filosofal", 0, 0);
@@ -268,7 +268,6 @@ public class GestionLibro {
 
         descuento.put(0, ebv5);
         librosDispo.put(ev5.getIsbn(), ev5);
-
         return librosDispo;
     }
 }

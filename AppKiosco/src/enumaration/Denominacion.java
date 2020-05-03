@@ -9,7 +9,7 @@ package enumaration;
 public enum Denominacion {
 
     CIENMIL(100000),
-    CICUENTAMIL(50000),
+    CINCUENTAMIL(50000),
     VEINTEMIL(20000),
     DIEZMIL(10000);
 

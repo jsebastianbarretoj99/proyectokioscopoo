@@ -39,7 +39,7 @@ public class Billete {
 
     @Override
     public String toString() {
-        return "Billete{" + "cantidad=" + cantidad + ", denominacion=" + denominacion + '}';
+        return "Billete{" +  " denominacion = " + denominacion + ", cantidad = " + cantidad + '}';
     }
     
     
