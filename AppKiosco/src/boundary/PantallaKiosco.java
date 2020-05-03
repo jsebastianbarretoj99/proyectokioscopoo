@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package boundary;
 
 import control.Libreria;
@@ -25,7 +20,8 @@ import java.util.Scanner;
 /**
  *
  * @author Juan Sebastian Barreto Jimenez Juan Camilo Devia Bastos Nicolas
- * Javier Ramirez Beltran Valentina López Suárez
+ * Javier Ramirez Beltran Valentina López Suárez 
+ * Mayo 04 2020
  */
 public class PantallaKiosco {
 
