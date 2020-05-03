@@ -63,4 +63,9 @@ public class PagoPrestamo {
         this.saldoFaltante = saldoFaltante;
     }
 
+    @Override
+    public String toString() {
+        return "PagoPrestamo{" + "totalIntro=" + totalIntro + ", valorPrestamo=" + valorPrestamo + ", saldoFaltante=" + saldoFaltante + '}';
+    }
+
 }
