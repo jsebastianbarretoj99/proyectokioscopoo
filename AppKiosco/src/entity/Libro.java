@@ -9,7 +9,8 @@ import java.util.HashMap;
 
 /**
  *
- * @author juan-
+ * @author Juan Sebastian Barreto Jimenez Juan Camilo Devia Bastos Nicolas
+ * Javier Ramirez Beltran Valentina López Suárez
  */
 public abstract class Libro {
 
@@ -19,14 +20,20 @@ public abstract class Libro {
     private String nombre;
     private int numeroImagenes;
     private int numeroVideos;
-    private HashMap<Integer,Libro> saga;
+    private HashMap<Integer, Libro> saga;
     private HashMap<Integer, Descuento> descuentos;
 
+<<<<<<< HEAD
     public Libro(){
         this.saga = new HashMap<>();
         this.descuentos = new HashMap<>();
+=======
+    public Libro() {
+        saga = new HashMap<>();
+        descuentos = new HashMap<>();
+>>>>>>> 028543df84c86b60ee5e8e0de5650d256ff2cd23
     }
-    
+
     public Libro(String isbn, int unidadesDisponibles, double precioBase, String nombre, int numeroImagenes, int numeroVideos) {
         this.isbn = isbn;
         this.unidadesDisponibles = unidadesDisponibles;
@@ -106,6 +113,10 @@ public abstract class Libro {
     public String toString() {
         return "Libro{" + "isbn=" + isbn + ", unidadesDisponibles=" + unidadesDisponibles + ", precioBase=" + precioBase + ", nombre=" + nombre + '}';
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 028543df84c86b60ee5e8e0de5650d256ff2cd23
     public abstract double precioTotal();
-    
+
 }

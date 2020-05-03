@@ -13,6 +13,8 @@ import java.util.HashMap;
 import dto.EAgregarLibroEnPrestamo;
 import dto.IniciarPrestamo;
 import dto.ListarLibros;
+import dto.ReporteDiario;
+import dto.ReporteLibroDiario;
 import entity.EBookImage;
 import entity.EBookVideo;
 import entity.Libro;
@@ -22,13 +24,11 @@ import java.util.Scanner;
 
 /**
  *
- * @author xboxk
+ * @author Juan Sebastian Barreto Jimenez Juan Camilo Devia Bastos Nicolas
+ * Javier Ramirez Beltran Valentina López Suárez
  */
 public class PantallaKiosco {
 
-    /**
-     * @param args the command line arguments
-     */
     // Punto 1 
     private Libreria quiosco = new Libreria();
 
@@ -39,8 +39,14 @@ public class PantallaKiosco {
         String clave = "1234", cvIngre; // La clave que habilita al 
         // Administrador // punto 9 a 
         AcabarPrestamo acabP;
+<<<<<<< HEAD
         int opcion = 0;
         boolean ver = true, noTermino = false;
+=======
+        ReporteDiario rP;
+        int opcion;
+        boolean ver = true, noTermino = false, prestamoUno = false, vern = true;
+>>>>>>> 028543df84c86b60ee5e8e0de5650d256ff2cd23
         // Punto 1 d: Se inicia el día. 
         panta.quiosco = new Libreria();
         Scanner teclado = new Scanner(System.in);
@@ -55,9 +61,7 @@ public class PantallaKiosco {
         System.out.println("4. Reporte diario.");
         System.out.println("5. Salir");
         System.out.println("Digite una opcion");
-
         opcion = teclado.nextInt();
-
         while (opcion != 5) {
             switch (opcion) {
                 case 1:
@@ -70,6 +74,7 @@ public class PantallaKiosco {
                         for (ListarLibros lib : panta.quiosco.listarLibros().values()) {
                             System.out.println(lib.toString());
                         }
+<<<<<<< HEAD
                         //Continuación Punto 3 y Punto 4 
                         agregarLibro(panta);
 
@@ -85,6 +90,20 @@ public class PantallaKiosco {
 
                 case 2:
                     //punto 7 a
+=======
+                        listarBilletes(panta);
+                        introducirBilletes(panta);
+                        System.out.println("Termino el ingreso de los billetes");
+                        //Continuación Punto 3 y Punto 4 
+                        agregarLibro(panta);
+                    } else {
+                        System.out.println(pres.getError());
+                    }
+                    break;
+
+                case 2:    //punto 7 a
+
+>>>>>>> 028543df84c86b60ee5e8e0de5650d256ff2cd23
                     if (ver) {
                         System.out.println("No se ha iniciado un prestamo.");
                     } else {
@@ -114,6 +133,49 @@ public class PantallaKiosco {
                         }
                         ver = true;
                     }
+<<<<<<< HEAD
+=======
+                    break;
+
+                case 3:
+                    if (prestamoUno) {
+                        System.out.println("Reporte Diario");
+                        System.out.println("Valor total prestamo del dia: " + rP.getValorPrestamoD());
+                        while(vern) {
+                            teclado = new Scanner(System.in);
+                            System.out.println("Digite la clave de administracion");
+                            cvIngre = teclado.nextLine();
+                            if (clave.equals(cvIngre)) {
+                                System.out.println("Reporte diario");
+                                rP = panta.quiosco.generarReporte();
+                                System.out.println("Valor total de prestamos del dia = " + rP.getValorPrestamoD());
+                                System.out.println("Reporte de libros prestados= ");
+                                for (ReporteLibroDiario rp : rP.getReporteD().values()) {
+                                    System.out.println(rp.getTipo() + " " + rp.getCantidadPrestamo() + " " + rp.getPreciPrestamo());
+                                }
+                                System.out.println("Libros no vendidos");
+                                System.out.print("PaperBook  cantidad:");
+                                System.out.println(rP.getLibrosNoVendidos().get("PaperBook"));
+                                System.out.print("EBook  cantidad:");
+                                System.out.println(rP.getLibrosNoVendidos().get("EBook"));
+
+                                System.out.println("Sitios de descarga");
+                                for (String S : rP.getSitiosDescarga().values()) {
+                                    System.out.println(S);
+                                }
+
+                                vern = false;
+                            } else if ("NO".equals(cvIngre)) {
+                                vern = false;
+                            } else {
+                                System.out.println("Clave incorrecta");
+                            }
+                            System.out.println("Digite la clave de administracion: (Si se quiere salir ingrese NO)");
+                        }//fdfd
+                    } else {
+                        System.out.println("No hay prestamos hoy");
+                    }
+>>>>>>> 028543df84c86b60ee5e8e0de5650d256ff2cd23
                     break;
             }
             opcion = 5;
@@ -125,12 +187,18 @@ public class PantallaKiosco {
         Scanner teclado = new Scanner(System.in);
         String isbn_p;
         Integer isbn_s;
+<<<<<<< HEAD
         System.out.println("Ingerese el isbn del libro que desea pedir"
                 + ". De lo contrario escriba NO");
+=======
+        System.out.println("Agregue el isbn del libro que desea pedir:"
+                + "De lo contrario escriba NO");
+>>>>>>> 028543df84c86b60ee5e8e0de5650d256ff2cd23
         isbn_p = teclado.nextLine();
         while (!isbn_p.equals("NO")) {
             Libro lib_pe = pan.quiosco.buscarLibroIsbn(isbn_p);
             Libro libro = construirLibro(pan, lib_pe);
+<<<<<<< HEAD
             if (libro != null) {
                 if (!lib_pe.getSaga().isEmpty()) {
                     for (Map.Entry<Integer, Libro> lib_entry : lib_pe.getSaga().entrySet()) {
@@ -141,6 +209,22 @@ public class PantallaKiosco {
                     }
                     System.out.println("Si desea agrear un libro de la lista de saga "
                             + "escriba CODIGO de lo contrario -1");
+=======
+            if (!lib_pe.getSaga().isEmpty()) {
+                for (Map.Entry<Integer, Libro> lib_entry : lib_pe.getSaga().entrySet()) {
+                    Integer key = lib_entry.getKey();
+                    Libro libs = lib_entry.getValue();
+                    System.out.print("Código :" + key + " ");
+                    System.out.println(libs.toString());
+                }
+                System.out.println("Si desea agrear un libro de la lista de saga "
+                        + "escriba CODIGO de lo contrario -1");
+                isbn_s = teclado.nextInt();
+                while (isbn_s != -1) {
+                    libro.getSaga().put(isbn_s, construirLibro(pan, lib_pe.getSaga().get(isbn_s)));
+                    System.out.println("Si desea agregar otro libro escriba el"
+                            + " CODIGO. Si no escriba -1");
+>>>>>>> 028543df84c86b60ee5e8e0de5650d256ff2cd23
                     isbn_s = teclado.nextInt();
                     while (isbn_s != -1) {
                         Libro lib_nuevo = construirLibro(pan, lib_pe.getSaga().get(isbn_s));
@@ -153,29 +237,51 @@ public class PantallaKiosco {
             }
             //Agregar libro
             EAgregarLibroEnPrestamo errorAgregar = pan.quiosco.agregarLibros(libro);
+<<<<<<< HEAD
 
             System.out.println(errorAgregar.toString());
 
+=======
+            System.out.println(errorAgregar.toString());
+>>>>>>> 028543df84c86b60ee5e8e0de5650d256ff2cd23
             System.out.println("Si desea agregar un nuevo libro escriba el Isbn"
                     + "De lo contrario escriba NO");
             teclado = new Scanner(System.in);
             isbn_p = teclado.nextLine();
         }
+<<<<<<< HEAD
+=======
+    }
+
+    //Punto 5 
+    public static void listarBilletes(PantallaKiosco panta) {
+        HashMap<Integer, Denominacion> listaBilletes;
+        listaBilletes = panta.quiosco.listarBillete();
+        System.out.println("Numeraciones posibles para introducir :");
+        for (Denominacion bil : listaBilletes.values()) {
+            System.out.println(bil.getValor());
+        }
+>>>>>>> 028543df84c86b60ee5e8e0de5650d256ff2cd23
     }
 
     public static void introducirBilletes(PantallaKiosco panta) {
-        PagoPrestamo p = new PagoPrestamo();
+        PagoPrestamo p;
         Scanner teclado = new Scanner(System.in);
-        int dem_p;
+        String dem_p;
         System.out.println("Ingrese una nominación del billete, finalice con '-1' ");
-        dem_p = teclado.nextInt();
-        while (dem_p == -1) {
+        dem_p = teclado.nextLine();
+        while (dem_p.equals("-1")) {
             System.out.println("No ha ingresado Billetes");
             System.out.println("Ingrese una nominación del billete, finalice con '-1' ");
-            dem_p = teclado.nextInt();
+            dem_p = teclado.nextLine();
         }
+<<<<<<< HEAD
         while (dem_p != -1) {
             p = panta.quiosco.introducirBillete(Denominacion.DIEZMIL);
+=======
+        while (dem_p.equals("-1")) {
+            p = panta.quiosco.introducirBillete(introducirNumeracion(dem_p));
+>>>>>>> 028543df84c86b60ee5e8e0de5650d256ff2cd23
             if (p.getTotalIntro() == 0.0) {
                 System.out.println("La denominacion no es valida");
             } else {
@@ -183,10 +289,29 @@ public class PantallaKiosco {
             }
 
             System.out.println("Ingrese una nominación del billete, finalice con '-1' ");
-            dem_p = teclado.nextInt();
+            dem_p = teclado.nextLine();
         }
     }
 
+<<<<<<< HEAD
+=======
+    public static Denominacion introducirNumeracion(String valor) {
+        switch (valor) {
+            case "CIENMIL":
+                return Denominacion.CIENMIL;
+
+            case "CINCUENTAMIL":
+
+                return Denominacion.CICUENTAMIL;
+            case "VEINTEMIL":
+                return Denominacion.VEINTEMIL;
+            case "DIEZMIL":
+                return Denominacion.DIEZMIL;
+        }
+        return null;
+    }
+
+>>>>>>> 028543df84c86b60ee5e8e0de5650d256ff2cd23
     public static Libro construirLibro(PantallaKiosco pan, Libro lib_pe) {
         if (lib_pe instanceof PaperBook) {
             PaperBook lib = (PaperBook) lib_pe;

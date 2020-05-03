@@ -10,27 +10,32 @@ import java.util.HashMap;
 
 /**
  *
- * @author vale-
+ * @author Juan Sebastian Barreto Jimenez Juan Camilo Devia Bastos Nicolas
+ * Javier Ramirez Beltran Valentina López Suárez
  */
 public class ReporteDiario {
+
     private double valorPrestamoD;
     private HashMap< String, ReporteLibroDiario> reporteD;
-    private HashMap < String, Integer > librosNoVendidos;
-    private HashMap < String, String> sitiosDescarga;
+    private HashMap< String, Integer> librosNoVendidos;
+    private HashMap< String, String> sitiosDescarga;
 
-    public ReporteDiario(){
+    public ReporteDiario() {
         this.reporteD = new HashMap<>();
         this.librosNoVendidos = new HashMap<>();
         this.sitiosDescarga = new HashMap<>();
     }
 
-    public ReporteDiario(double valorPrestamoD, HashMap<String, ReporteLibroDiario> reporteD, HashMap<String, Integer > librosNoVendidos, HashMap<String, String> sitiosDescarga) {
+    public ReporteDiario(double valorPrestamoD, HashMap<String, ReporteLibroDiario> reporteD, HashMap<String, Integer> librosNoVendidos, HashMap<String, String> sitiosDescarga) {
         this.valorPrestamoD = valorPrestamoD;
         this.reporteD = reporteD;
         this.librosNoVendidos = librosNoVendidos;
         this.sitiosDescarga = sitiosDescarga;
+        this.reporteD = new HashMap<>();
+        this.librosNoVendidos = new HashMap<>();
+        this.sitiosDescarga = new HashMap<>();
     }
-    
+
     public double getValorPrestamoD() {
         return valorPrestamoD;
     }
@@ -62,6 +67,5 @@ public class ReporteDiario {
     public void setSitiosDescarga(HashMap<String, String> sitiosDescarga) {
         this.sitiosDescarga = sitiosDescarga;
     }
-    
-    
+
 }
