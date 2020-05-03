@@ -23,8 +23,8 @@ public abstract class Libro {
     private HashMap<Integer, Descuento> descuentos;
 
     public Libro(){
-        saga = new HashMap<>();
-        descuentos = new HashMap<>();
+        this.saga = new HashMap<>();
+        this.descuentos = new HashMap<>();
     }
     
     public Libro(String isbn, int unidadesDisponibles, double precioBase, String nombre, int numeroImagenes, int numeroVideos) {
@@ -33,11 +33,11 @@ public abstract class Libro {
         this.precioBase = precioBase;
         this.nombre = nombre;
         this.numeroImagenes = numeroImagenes;
-        this.numeroVideos = numeroVideos;
-        saga = new HashMap<>();
-        descuentos = new HashMap<>();
+        this.numeroVideos = numeroVideos;        
+        this.saga = new HashMap<>();
+        this.descuentos = new HashMap<>();
     }
-
+    
     public String getIsbn() {
         return isbn;
     }
@@ -106,8 +106,6 @@ public abstract class Libro {
     public String toString() {
         return "Libro{" + "isbn=" + isbn + ", unidadesDisponibles=" + unidadesDisponibles + ", precioBase=" + precioBase + ", nombre=" + nombre + '}';
     }
-    
- 
     public abstract double precioTotal();
     
 }

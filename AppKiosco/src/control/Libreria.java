@@ -24,7 +24,9 @@ import entity.PorSaga;
 import entity.Prestamo;
 import enumaration.Denominacion;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -159,10 +161,15 @@ public class Libreria {
     //Punto 4 
     public EAgregarLibroEnPrestamo agregarLibros(Libro lib_in) {
         EAgregarLibroEnPrestamo errorAgregar = new EAgregarLibroEnPrestamo();
-        Libro lib_ver = buscarLibroIsbn(lib_in.getIsbn());
+        Libro lib_ver;
+        if(lib_in ==null){
+            lib_ver = null;
+        }else{
+           lib_ver = buscarLibroIsbn(lib_in.getIsbn());
+        }        
         //Punto 4 a I 
         if (lib_ver != null) {
-            //Punto 4 a II
+            //Punt1 4 a II
             if (unidadesDisponiblesLibros(lib_in.getIsbn(), lib_ver)) {
 
                 errorAgregar.setError(verificarSaga(lib_in, lib_ver));
@@ -221,29 +228,35 @@ public class Libreria {
     //Punto saga verificamos los libros de la saga ingresados
     private String verificarSaga(Libro lib, Libro lib_ver) {
         String error = " ";
-        boolean flag = true;
+        List<Integer> llaves = new ArrayList<>();
         //verificar que los isbn se encuentran y si hay unidades disponibles
         //libro de entrada
         for (Map.Entry<Integer, Libro> lib_entry : lib.getSaga().entrySet()) {
             Integer key = lib_entry.getKey();
             Libro lib_in = lib_entry.getValue();
             // Saga del libro en libros disponibles
-            for (Libro lib_saga : lib_ver.getSaga().values()) {
-                //Hace parte de la saga 
-                if (lib_in.getIsbn().equals(lib_saga.getIsbn())) {
-                    flag = false;
-                    //Unidades disponibles 
-                    if (!unidadesDisponiblesLibrosSaga(lib.getIsbn(), lib_ver)) {
-                        error += lib_in.getIsbn() + " no hay unidades disponibles, ";
-                        lib.getSaga().remove(key);
+            if (!(lib_in == null)) {
+                for (Libro lib_saga : lib_ver.getSaga().values()) {
+                    //Hace parte de la saga 
+                    if (lib_in.getIsbn().equals(lib_saga.getIsbn())) {
+                        //Unidades disponibles 
+                        if (!unidadesDisponiblesLibrosSaga(lib.getIsbn(), lib_ver)) {
+                            error += lib_in.getIsbn() + " no hay unidades disponibles, ";
+                            lib.getSaga().remove(key);
+                        }
                     }
                 }
-            }
-            if (flag) {
-                error += lib_in.getIsbn() + " no existe, ";
-                lib.getSaga().remove(key);
             } else {
-                flag = true;
+                llaves.add(key);
+            }
+        }
+        if (lib_ver.getSaga().isEmpty()) {
+            error = null;
+        } else {
+            error += " El/los código(s) no hacen partes de la saga : ";
+            for (Integer llav : llaves) {
+                error += llav + " ";
+                lib.getSaga().remove(llav);
             }
         }
         return error;
@@ -317,7 +330,10 @@ public class Libreria {
 
     // punto 4 a V 3 a
     private int totalLibrosSaga(Libro libro) {
-        int tot =0;
+        int tot = 0;
+        if(libro == null)
+            return 0;
+        
         for (Libro libs : libro.getSaga().values()) {
             tot += libs.getUnidadesDisponibles();
         }
