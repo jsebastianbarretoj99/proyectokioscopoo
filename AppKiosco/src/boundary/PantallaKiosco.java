@@ -47,13 +47,11 @@ public class PantallaKiosco {
         // punto 7 a 
         System.out.println("2. Terminar prestamo.");
         // punto 8 a 
-        System.out.println("3. Devolver Billetes");
-        // punto 9 a 
-        System.out.println("4. Reporte diario.");
-        System.out.println("5. Salir");
+        System.out.println("3. Reporte diario.");
+        System.out.println("4. Salir");
         System.out.println("Digite una opcion");
         opcion = teclado.nextInt();
-        while (opcion != 5) {
+        while (opcion != 4) {
             switch (opcion) {
                 case 1:
                     IniciarPrestamo pres = panta.quiosco.iniciraPrestamo();
@@ -68,7 +66,7 @@ public class PantallaKiosco {
                         //Continuación Punto 3 y Punto 4 
                         agregarLibro(panta);
 
-                        //listarBilletes(panta);
+                        listarBilletes(panta);
                         //introducirBilletes(panta);
                         System.out.println("Termino el ingreso de los billetes");
 
@@ -150,8 +148,22 @@ public class PantallaKiosco {
                         System.out.println("No hay prestamos hoy");
                     }
                     break;
+                
+                default:
+                    System.out.println("No ingresaste una opción valida");
+                    break;
             }
-            opcion = 5;
+            teclado = new Scanner(System.in);
+            System.out.println("Menú de Prestamos de libros en quiosco");
+            // punto 2 a 
+            System.out.println("1. Iniciar préstamo.");
+            // punto 7 a 
+            System.out.println("2. Terminar prestamo.");
+            // punto 8 a 
+            System.out.println("3. Reporte diario.");
+            System.out.println("4. Salir");
+            System.out.println("Digite una opcion");
+            opcion = teclado.nextInt();
         }
     }
 
