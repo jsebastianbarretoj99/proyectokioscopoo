@@ -37,7 +37,7 @@ public class Libreria {
     private HashMap< Integer, Prestamo> prestamos;
     private HashMap< String, Libro> librosDisponibles;
 
-    // 1 c 
+    //Punto 1 c 
     public Libreria() {
         crearColeccionLibros();
         crearColeccionBilletes();
@@ -84,12 +84,12 @@ public class Libreria {
         this.librosDisponibles = librosDisponibles;
     }
 
-    // 1 a II
+    // Punto 1 a II
     private void crearColeccionLibros() {
         this.librosDisponibles = this.gestion.crearColeccionLibro();
     }
 
-    // 1 b II
+    // Punto 1 b II
     private void crearColeccionBilletes() {
         this.dineroAcumulado = new HashMap();
         this.dineroAcumulado.put(Denominacion.CIENMIL, new Billete(10, Denominacion.CIENMIL));
@@ -98,7 +98,7 @@ public class Libreria {
         this.dineroAcumulado.put(Denominacion.DIEZMIL, new Billete(5, Denominacion.DIEZMIL));
     }
 
-    //punto 2
+    // Punto  2
     public IniciarPrestamo iniciraPrestamo() {
         LocalDate ahora = LocalDate.now();
         IniciarPrestamo acab = new IniciarPrestamo();
@@ -120,7 +120,7 @@ public class Libreria {
 
     }
 
-    // 2 b 4 1
+    // Punto 2 b IV 1
     private boolean unidadesDisponiblesLibros() {
         int acom = 0;
         for (Libro lib : this.librosDisponibles.values()) {
@@ -269,7 +269,7 @@ public class Libreria {
         return buscarLibroIsbn(isbn_p).getUnidadesDisponibles() > acum;
     }
 
-    // Punto 4 a IV 1 a, b i ii
+    // Punto 3 I 1 a, 4 a IV 1 c
     private double usePrecioTotal(Libro lib) {
         if (lib instanceof PaperBook) {
             PaperBook auxL = (PaperBook) lib;
@@ -328,7 +328,7 @@ public class Libreria {
         return tot;
     }
 
-    // punto 4 a iv c i
+    // punto 4 a V 4 a
     private double totalSaga(HashMap<Integer, Libro> saga) {
         double precioT = 0;
         for (Libro libro : saga.values()) {
@@ -359,13 +359,13 @@ public class Libreria {
         return deno;
     }
 
-    //punto 6 
+    // Punto 6 
     public PagoPrestamo introducirBillete(Denominacion demo) {
         Billete bil;
         PagoPrestamo pago = new PagoPrestamo();
-        // 6 a I 1  
+        // Punto 6 a I 1  
         if (buscarDenominacio(demo, this.dineroAcumulado)) {
-            //6 a I 2
+            // Punto 6 a I 2
             if (buscarDenominacio(demo, this.prestamoActual.getPagoBillete())) {
                 bil = this.prestamoActual.getPagoBillete().get(demo);
                 bil.setCantidad(bil.getCantidad() + 1);
@@ -373,23 +373,23 @@ public class Libreria {
                 this.prestamoActual.getPagoBillete().put(demo, new Billete(1, demo));
             }
         }
-        //6 a II 1 
+        // Punto 6 a II 1 
         pago.setPagoBillete(this.prestamoActual.getPagoBillete());
-        // 6 a II 2  
+        // Punto  6 a II 2  
         pago.setTotalIntro(totalIntroducido(this.prestamoActual.getPagoBillete()));
-        // 6 a II 3
+        // Punto  6 a II 3
         pago.setValorPrestamo(totalPrestamo());
-        // 6 a II 4
+        // Punto  6 a II 4
         pago.setSaldoFaltante(saldoFaltante());
         return pago;
     }
 
-    //6 a I 1 
+    // Punto 6 a I 1 
     private boolean buscarDenominacio(Denominacion demo, HashMap<Denominacion, Billete> lista) {
         return lista.containsKey(demo);
     }
 
-    // 6 a II 2 a 
+    // Punto  6 a II 2 a 
     private double totalIntroducido(HashMap<Denominacion, Billete> listaBilletes) {
         double total = 0;
         for (Billete bil : listaBilletes.values()) {
@@ -398,47 +398,47 @@ public class Libreria {
         return total;
     }
 
-    // 6 a II 4 a 
+    // Punto  6 a II 4 a 
     private double saldoFaltante() {
         return totalIntroducido(this.prestamoActual.getPagoBillete()) - totalPrestamo();
     }
 
-    // punto 7     
+    // Punto 7     
     public AcabarPrestamo terminarPrestamo() {
         AcabarPrestamo acab = new AcabarPrestamo();
-        //7 b I
+        // Punto 7 b I
         if (saldoFaltante() >= 0) {
-            //7 b II
+            // Punto 7 b II
             if (verificarVueltas(saldoFaltante()) >= 0) {
-                //7 b III 1 
+                // Punto 7 b III 1 
                 actualizarExistenciaLibro();
-                //7 b III 2
+                // Punto 7 b III 2
                 actualizarBilletes();
-                // 7 b IV 5
+                // Punto 7 b IV 5
                 acab.setValorTVueltas(saldoFaltante());
             } else {
                 acab.setError("No se pueden dar vueltas: Dinero insufciente en caja");
             }
-            // 7 b IV 2
+            // Punto 7 b IV 2
             acab.setNumeroTotalLibros(totalLibrosPrestamo());
-            // 7 b IV 3
+            // Punto 7 b IV 3
             acab.setValorTPrestamo(totalPrestamo());
 
         } else {
             acab.setError("El dinero ingresado no cubre el valor del prestamo");
         }
-        // 7 b IV 4
+        // Punto 7 b IV 4
         acab.setTotalIntroBilletes(totalIntroducido(this.prestamoActual.getPagoBillete()));
 
         return acab;
     }
 
-    //7 b II 
+    // Punto 7 b II 
     private double verificarVueltas(double vueltas) {
         return totalIntroducido(this.getDineroAcumulado()) - vueltas;
     }
 
-    // 7 b III 1
+    // Punto  7 b III 1
     private void actualizarExistenciaLibro() {
         Libro lib1;
         for (Libro lib : this.prestamoActual.getLibrosEnPrestamo().values()) {
@@ -452,7 +452,7 @@ public class Libreria {
         }
     }
 
-    // 7 b III 2
+    // Punto  7 b III 2
     private void actualizarBilletes() {
         Billete bild;
         for (Billete bila : this.prestamoActual.getPagoBillete().values()) {
@@ -472,7 +472,7 @@ public class Libreria {
         return reporte;
     }
 
-    // 8 b I 1 
+    // Punto 8 b I 1 
     private double valorTPresatamosD() {
         double precioT = 0;
         for (Prestamo pres : this.prestamos.values()) {
@@ -482,7 +482,7 @@ public class Libreria {
         return precioT;
     }
 
-    // punto 8 b II 2
+    // Punto 8 b II 2
     private void reporteCantidad(ReporteDiario repor) {
         ReporteLibroDiario libro = new ReporteLibroDiario();
         int canP = 0, canEV = 0, canEI = 0, precioP = 0, precioEV = 0, precioEI = 0;
@@ -528,14 +528,14 @@ public class Libreria {
         repor.getReporteD().put(libro.getTipo(), libro);
     }
 
-    //punto 8 b II 2 
+    // Punto 8 b II 2 
     private void modificarValor(ReporteLibroDiario libro, String tipo, int canP, int precioP) {
         libro.setTipo(tipo);
         libro.setCantidadPrestamo(canP);
         libro.setPrecioPrestamo(precioP);
     }
 
-    // punto 8 b II 3
+    // Punto 8 b II 3
     private void reporteTotal(ReporteDiario repor) {
         ReporteLibroDiario libro = new ReporteLibroDiario();
         libro.setTipo("EBook");
@@ -549,7 +549,7 @@ public class Libreria {
         repor.getReporteD().put(libro.getTipo(), libro);
     }
 
-    // punto 8 b III 1
+    // Punto 8 b III 1
     private void reporteNoVendidos(ReporteDiario repor) {
         Integer acomp = 0, acomeb = 0;
         for (Libro lib : this.librosDisponibles.values()) {
@@ -563,7 +563,7 @@ public class Libreria {
         repor.getLibrosNoVendidos().put("EBook", acomeb);
     }
 
-    // punto 8 b IV 1
+    // Punto 8 b IV 1
     private void reporteSitiosDescarga(ReporteDiario repor) {
         for (Libro lib : this.librosDisponibles.values()) {
             if (!(lib instanceof PaperBook)) {

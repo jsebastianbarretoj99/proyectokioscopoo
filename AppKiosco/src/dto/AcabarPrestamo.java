@@ -3,10 +3,11 @@ package dto;
 /**
  *
  * @author Juan Sebastian Barreto Jimenez Juan Camilo Devia Bastos Nicolas
- * Javier Ramirez Beltran Valentina López Suárez 
- * Mayo 04 2020
+ * Javier Ramirez Beltran Valentina López Suárez Mayo 04 2020
  */
+//  Punto 7
 public class AcabarPrestamo {
+
     private String error;
     private int numeroTotalLibros;
     private double valorTPrestamo;
@@ -16,7 +17,7 @@ public class AcabarPrestamo {
     public AcabarPrestamo() {
     }
 
-    public AcabarPrestamo(String error, int numeroTotalPrestamo, double valorTPrestamo, double totalIntroBilletes, double valorTVueltas){
+    public AcabarPrestamo(String error, int numeroTotalPrestamo, double valorTPrestamo, double totalIntroBilletes, double valorTVueltas) {
         this.error = error;
         this.numeroTotalLibros = numeroTotalPrestamo;
         this.valorTPrestamo = valorTPrestamo;
@@ -63,5 +64,5 @@ public class AcabarPrestamo {
     public void setValorTVueltas(double valorTVueltas) {
         this.valorTVueltas = valorTVueltas;
     }
-    
+
 }

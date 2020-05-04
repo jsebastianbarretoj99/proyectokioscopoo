@@ -5,10 +5,10 @@ import java.util.HashMap;
 /**
  *
  * @author Juan Sebastian Barreto Jimenez Juan Camilo Devia Bastos Nicolas
- * Javier Ramirez Beltran Valentina López Suárez 
- * Mayo 04 2020
+ * Javier Ramirez Beltran Valentina López Suárez Mayo 04 2020
  */
 public abstract class Descuento {
+
     private double porcentaje;
 
     public double getPorcentaje() {
@@ -25,8 +25,7 @@ public abstract class Descuento {
 
     public Descuento() {
     }
-    
-    public abstract double calcularTotal(double valor, HashMap <Integer,Libro> saga);
-    
-    
+
+    public abstract double calcularTotal(double valor, HashMap<Integer, Libro> saga);
+
 }

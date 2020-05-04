@@ -5,20 +5,19 @@ import enumaration.Denominacion;
 /**
  *
  * @author Juan Sebastian Barreto Jimenez Juan Camilo Devia Bastos Nicolas
- * Javier Ramirez Beltran Valentina López Suárez 
- * Mayo 04 2020
+ * Javier Ramirez Beltran Valentina López Suárez Mayo 04 2020
  */
 public class Billete {
+
     private int cantidad;
     private Denominacion denominacion;
-    
 
     public Billete() {
     }
 
     public Billete(int cantidad, Denominacion denominacion) {
         this.cantidad = cantidad;
-        this.denominacion = denominacion; 
+        this.denominacion = denominacion;
     }
 
     public int getCantidad() {
@@ -39,9 +38,7 @@ public class Billete {
 
     @Override
     public String toString() {
-        return "Billete{" +  " denominacion = " + denominacion + ", cantidad = " + cantidad + '}';
+        return "Billete{" + " denominacion = " + denominacion + ", cantidad = " + cantidad + '}';
     }
-    
-    
-   
+
 }

@@ -5,8 +5,7 @@ import java.util.HashMap;
 /**
  *
  * @author Juan Sebastian Barreto Jimenez Juan Camilo Devia Bastos Nicolas
- * Javier Ramirez Beltran Valentina López Suárez 
- * Mayo 04 2020
+ * Javier Ramirez Beltran Valentina López Suárez Mayo 04 2020
  */
 public abstract class Libro {
 
@@ -31,11 +30,11 @@ public abstract class Libro {
         this.precioBase = precioBase;
         this.nombre = nombre;
         this.numeroImagenes = numeroImagenes;
-        this.numeroVideos = numeroVideos;        
+        this.numeroVideos = numeroVideos;
         this.saga = new HashMap<>();
         this.descuentos = new HashMap<>();
     }
-    
+
     public String getIsbn() {
         return isbn;
     }

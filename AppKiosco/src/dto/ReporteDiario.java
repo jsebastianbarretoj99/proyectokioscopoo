@@ -5,9 +5,9 @@ import java.util.HashMap;
 /**
  *
  * @author Juan Sebastian Barreto Jimenez Juan Camilo Devia Bastos Nicolas
- * Javier Ramirez Beltran Valentina López Suárez 
- * Mayo 04 2020
+ * Javier Ramirez Beltran Valentina López Suárez Mayo 04 2020
  */
+//  Punto 8
 public class ReporteDiario {
 
     private double valorPrestamoD;

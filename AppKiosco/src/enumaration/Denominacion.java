@@ -3,8 +3,7 @@ package enumaration;
 /**
  *
  * @author Juan Sebastian Barreto Jimenez Juan Camilo Devia Bastos Nicolas
- * Javier Ramirez Beltran Valentina López Suárez 
- * Mayo 04 2020
+ * Javier Ramirez Beltran Valentina López Suárez Mayo 04 2020
  */
 public enum Denominacion {
 
@@ -14,11 +13,10 @@ public enum Denominacion {
     DIEZMIL(10000);
 
     private double valor;
-        
+
     private Denominacion(double valor) {
         this.valor = valor;
     }
-    
 
     public double getValor() {
         return valor;
@@ -27,5 +25,5 @@ public enum Denominacion {
     public void setValor(double valor) {
         this.valor = valor;
     }
-    
+
 }

@@ -5,13 +5,14 @@ import entity.Prestamo;
 /**
  *
  * @author Juan Sebastian Barreto Jimenez Juan Camilo Devia Bastos Nicolas
- * Javier Ramirez Beltran Valentina López Suárez 
- * Mayo 04 2020
+ * Javier Ramirez Beltran Valentina López Suárez Mayo 04 2020
  */
+//  Punto 2
 public class IniciarPrestamo {
+
     private String error;
-    private Prestamo pres ;
-    
+    private Prestamo pres;
+
     public IniciarPrestamo() {
     }
 
@@ -35,5 +36,5 @@ public class IniciarPrestamo {
     public void setPres(Prestamo pres) {
         this.pres = pres;
     }
-    
+
 }

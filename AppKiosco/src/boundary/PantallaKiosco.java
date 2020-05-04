@@ -21,8 +21,7 @@ import java.util.Scanner;
 /**
  *
  * @author Juan Sebastian Barreto Jimenez Juan Camilo Devia Bastos Nicolas
- * Javier Ramirez Beltran Valentina López Suárez 
- * Mayo 04 2020
+ * Javier Ramirez Beltran Valentina López Suárez Mayo 04 2020
  */
 public class PantallaKiosco {
 
@@ -55,6 +54,7 @@ public class PantallaKiosco {
         while (opcion != 4) {
             switch (opcion) {
                 case 1:
+                    // Punto 2
                     IniciarPrestamo pres = panta.quiosco.iniciraPrestamo();
                     if (pres.getError() == null) {
                         System.out.println("El prestamo se creo");
@@ -66,10 +66,12 @@ public class PantallaKiosco {
                         }
                         //Continuación Punto 3 y Punto 4 
                         agregarLibro(panta);
+                        //Punto 5 
                         listarBilletes(panta);
+                        //Punto 6 
                         introducirBilletes(panta);
                         System.out.println("Termino el ingreso de los billetes");
-                        ver =  false;
+                        ver = false;
                     } else {
                         System.out.println(pres.getError());
                     }
@@ -77,11 +79,11 @@ public class PantallaKiosco {
                     break;
 
                 case 2:
-                    //punto 7 a
+                    //punto 7
                     if (ver) {
                         System.out.println("No se ha iniciado un prestamo.");
                     } else {
-                        // punto 7 b V
+                        // punto 7
                         acabP = panta.quiosco.terminarPrestamo();
                         System.out.println("Acabar Prestamo:");
                         System.out.println("Error = " + acabP.getError());
@@ -91,10 +93,10 @@ public class PantallaKiosco {
                         System.out.println("Total de las vueltas = " + acabP.getValorTVueltas());
 
                         while ("El dinero ingresado no cubre el valor del prestamo".equals(acabP.getError())) {
-                            // punto 6 a III
+                            // punto 6
                             introducirBilletes(panta);
                             System.out.println("Finalizó el ingreso de Billetes");
-                            // punto 7 b V
+                            // punto 7
                             acabP = panta.quiosco.terminarPrestamo();
                             System.out.println("Acabar Prestamo:");
                             System.out.println("Error = " + acabP.getError());
@@ -104,13 +106,14 @@ public class PantallaKiosco {
                             System.out.println("Total de las vueltas = " + acabP.getValorTVueltas());
                         }
                         ver = true;
-                        if(acabP.getError() == null){
+                        if (acabP.getError() == null) {
                             prestamoUno = true;
                         }
                     }
                     break;
 
                 case 3:
+                    // Punto 8
                     if (prestamoUno) {
                         while (vern) {
                             teclado = new Scanner(System.in);
@@ -141,14 +144,14 @@ public class PantallaKiosco {
                             } else {
                                 System.out.println("Clave incorrecta");
                                 System.out.println("Digite la clave de administracion: (Si se quiere salir ingrese NO)");
-                            }  
+                            }
                         }
                     } else {
                         System.out.println("No hay prestamos hoy");
                     }
                     vern = true;
                     break;
-                
+
                 default:
                     System.out.println("No ingresaste una opción valida");
                     break;
@@ -207,8 +210,22 @@ public class PantallaKiosco {
         }
 
     }
-    //Punto 5 
 
+    public static Libro construirLibro(PantallaKiosco pan, Libro lib_pe) {
+        if (lib_pe instanceof PaperBook) {
+            PaperBook lib = (PaperBook) lib_pe;
+            return new PaperBook(lib.getUbicacion(), lib.getPrecioPapeleria(), lib.getIsbn(), 1, lib.getPrecioBase(), lib.getNombre(), lib.getNumeroImagenes(), lib.getNumeroVideos());
+        } else if (lib_pe instanceof EBookImage) {
+            EBookImage lib = (EBookImage) lib_pe;
+            return new EBookImage(lib.getPrecioPorImagen(), lib.getSitioDescarga(), lib.getIsbn(), 1, lib.getPrecioBase(), lib.getNombre(), lib.getNumeroImagenes(), lib.getNumeroVideos());
+        } else if (lib_pe instanceof EBookVideo) {
+            EBookVideo lib = (EBookVideo) lib_pe;
+            return new EBookVideo(lib.getPrecioPorVideo(), lib.getSitioDescarga(), lib.getIsbn(), 1, lib.getPrecioBase(), lib.getNombre(), lib.getNumeroImagenes(), lib.getNumeroVideos());
+        }
+        return null;
+    }
+
+    //Punto 5 
     public static void listarBilletes(PantallaKiosco panta) {
         HashMap<Integer, Denominacion> listaBilletes;
         listaBilletes = panta.quiosco.listarBillete();
@@ -234,7 +251,7 @@ public class PantallaKiosco {
             HashMap<Denominacion, Billete> pBil;
             p = panta.quiosco.introducirBillete(introducirNumeracion(dem_p));
             System.out.println("Billetes Ingresados:");
-            
+
             for (Billete bil : p.getPagoBillete().values()) {
                 System.out.println(bil.toString());
             }
@@ -254,20 +271,6 @@ public class PantallaKiosco {
                 return Denominacion.VEINTEMIL;
             case "DIEZMIL":
                 return Denominacion.DIEZMIL;
-        }
-        return null;
-    }
-
-    public static Libro construirLibro(PantallaKiosco pan, Libro lib_pe) {
-        if (lib_pe instanceof PaperBook) {
-            PaperBook lib = (PaperBook) lib_pe;
-            return new PaperBook(lib.getUbicacion(), lib.getPrecioPapeleria(), lib.getIsbn(), 1, lib.getPrecioBase(), lib.getNombre(), lib.getNumeroImagenes(), lib.getNumeroVideos());
-        } else if (lib_pe instanceof EBookImage) {
-            EBookImage lib = (EBookImage) lib_pe;
-            return new EBookImage(lib.getPrecioPorImagen(), lib.getSitioDescarga(), lib.getIsbn(), 1, lib.getPrecioBase(), lib.getNombre(), lib.getNumeroImagenes(), lib.getNumeroVideos());
-        } else if (lib_pe instanceof EBookVideo) {
-            EBookVideo lib = (EBookVideo) lib_pe;
-            return new EBookVideo(lib.getPrecioPorVideo(), lib.getSitioDescarga(), lib.getIsbn(), 1, lib.getPrecioBase(), lib.getNombre(), lib.getNumeroImagenes(), lib.getNumeroVideos());
         }
         return null;
     }

@@ -3,8 +3,7 @@ package entity;
 /**
  *
  * @author Juan Sebastian Barreto Jimenez Juan Camilo Devia Bastos Nicolas
- * Javier Ramirez Beltran Valentina López Suárez 
- * Mayo 04 2020
+ * Javier Ramirez Beltran Valentina López Suárez Mayo 04 2020
  */
 public class EBookImage extends EBook {
 
@@ -25,8 +24,8 @@ public class EBookImage extends EBook {
 
     // punto 4 a IV 1 b I 
     @Override
-    public double precioTotal(){
-        return super.getPrecioBase() + (this.precioPorImagen*super.getNumeroImagenes());
+    public double precioTotal() {
+        return super.getPrecioBase() + (this.precioPorImagen * super.getNumeroImagenes());
     }
-   
+
 }

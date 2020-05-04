@@ -7,15 +7,14 @@ import java.util.HashMap;
 /**
  *
  * @author Juan Sebastian Barreto Jimenez Juan Camilo Devia Bastos Nicolas
- * Javier Ramirez Beltran Valentina López Suárez 
- * Mayo 04 2020
+ * Javier Ramirez Beltran Valentina López Suárez Mayo 04 2020
  */
 public class Prestamo {
-    
+
     private LocalDate fechaHora;
     private int numero;
-    private HashMap < Denominacion, Billete > pagoBillete; 
-    private HashMap < String, Libro> librosEnPrestamo;
+    private HashMap< Denominacion, Billete> pagoBillete;
+    private HashMap< String, Libro> librosEnPrestamo;
 
     public Prestamo() {
         this.pagoBillete = new HashMap();
