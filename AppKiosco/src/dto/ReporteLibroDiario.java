@@ -9,7 +9,7 @@ package dto;
 public class ReporteLibroDiario {
     private String tipo;
     private int cantidadPrestamo;
-    private double preciPrestamo;
+    private double precioPrestamo;
 
     public ReporteLibroDiario() {
     }
@@ -17,7 +17,7 @@ public class ReporteLibroDiario {
     public ReporteLibroDiario(String tipo, int cantidadPrestamo, double preciPrestamo) {
         this.tipo = tipo;
         this.cantidadPrestamo = cantidadPrestamo;
-        this.preciPrestamo = preciPrestamo;
+        this.precioPrestamo = preciPrestamo;
     }
 
     public String getTipo() {
@@ -36,13 +36,20 @@ public class ReporteLibroDiario {
         this.cantidadPrestamo = cantidadPrestamo;
     }
 
-    public double getPreciPrestamo() {
-        return preciPrestamo;
+    public double getPrecioPrestamo() {
+        return precioPrestamo;
     }
 
-    public void setPreciPrestamo(double preciPrestamo) {
-        this.preciPrestamo = preciPrestamo;
+    public void setPrecioPrestamo(double precioPrestamo) {
+        this.precioPrestamo = precioPrestamo;
     }
+
+    @Override
+    public String toString() {
+        return "ReporteLibroDiario{" + "tipo=" + tipo + ", cantidadPrestamo=" + cantidadPrestamo + ", precioPrestamo=" + precioPrestamo + '}';
+    }
+    
+    
     
     
 }

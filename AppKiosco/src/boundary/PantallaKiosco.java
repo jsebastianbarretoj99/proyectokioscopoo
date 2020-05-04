@@ -81,7 +81,6 @@ public class PantallaKiosco {
                     if (ver) {
                         System.out.println("No se ha iniciado un prestamo.");
                     } else {
-                        acabP = panta.quiosco.terminarPrestamo();
                         // punto 7 b V
                         acabP = panta.quiosco.terminarPrestamo();
                         System.out.println("Acabar Prestamo:");
@@ -101,7 +100,7 @@ public class PantallaKiosco {
                             System.out.println("Error = " + acabP.getError());
                             System.out.println("Total de libros del prestamo = " + acabP.getNumeroTotalLibros());
                             System.out.println("Valor total del prestamos = " + acabP.getValorTPrestamo());
-                            System.out.println("Total introducido de billtes = " + acabP.getTotalIntroBilletes());
+                            System.out.println("Total introducido de billetes = " + acabP.getTotalIntroBilletes());
                             System.out.println("Total de las vueltas = " + acabP.getValorTVueltas());
                         }
                         ver = true;
@@ -113,8 +112,6 @@ public class PantallaKiosco {
 
                 case 3:
                     if (prestamoUno) {
-                        System.out.println("Reporte Diario");
-                        System.out.println("Valor total prestamo del dia: " + rP.getValorPrestamoD());
                         while (vern) {
                             teclado = new Scanner(System.in);
                             System.out.println("Digite la clave de administracion");
@@ -123,9 +120,9 @@ public class PantallaKiosco {
                                 System.out.println("Reporte diario");
                                 rP = panta.quiosco.generarReporte();
                                 System.out.println("Valor total de prestamos del dia = " + rP.getValorPrestamoD());
-                                System.out.println("Reporte de libros prestados= ");
+                                System.out.println("Reporte de libros prestados = ");
                                 for (ReporteLibroDiario rp : rP.getReporteD().values()) {
-                                    System.out.println(rp.getTipo() + " " + rp.getCantidadPrestamo() + " " + rp.getPreciPrestamo());
+                                    System.out.println(rp.toString());
                                 }
                                 System.out.println("Libros no vendidos");
                                 System.out.print("PaperBook  cantidad:");
@@ -143,12 +140,13 @@ public class PantallaKiosco {
                                 vern = false;
                             } else {
                                 System.out.println("Clave incorrecta");
-                            }
-                            System.out.println("Digite la clave de administracion: (Si se quiere salir ingrese NO)");
-                        }//fdfd
+                                System.out.println("Digite la clave de administracion: (Si se quiere salir ingrese NO)");
+                            }  
+                        }
                     } else {
                         System.out.println("No hay prestamos hoy");
                     }
+                    vern = true;
                     break;
                 
                 default:

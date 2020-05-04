@@ -81,15 +81,15 @@ public class GestionLibro {
 
         descuento = new HashMap<>();
 
-        descuento.put(2, ps3);
-        descuento.put(3, ps4);
+        descuento.put(0, ps3);
+        descuento.put(1, ps4);
 
         pb1.setDescuentos(descuento);
         pb7.setDescuentos(descuento);
 
         descuento = new HashMap<>();
 
-        descuento.put(4, ps5);
+        descuento.put(0, ps5);
 
         pb2.setDescuentos(descuento);
 
@@ -105,7 +105,7 @@ public class GestionLibro {
         // Solo un libro 
         PaperBook pb8 = new PaperBook("110", 30000, "L0", 6, 40000, "Los Miserables", 0, 0);
         PaperBook pb9 = new PaperBook("120", 40000, "O0", 10, 30000, "Orgullo y Prejuicio", 0, 0);
-        PaperBook pb10 = new PaperBook("130", 10000, "O0", 10, 50000, "La isla bajo el mar", 0, 0);
+        PaperBook pb10 = new PaperBook("130", 10000, "LM", 10, 50000, "La isla bajo el mar", 0, 0);
 
         librosDispo.put(pb8.getIsbn(), pb8);
         librosDispo.put(pb9.getIsbn(), pb9);
@@ -153,7 +153,7 @@ public class GestionLibro {
         PorEBook pe4 = new PorEBook(0.20);
 
         descuento.put(0, es2);
-        descuento.put(2, pe1);
+        descuento.put(1, pe1);
 
         eb1.setDescuentos(descuento);
         descuento = new HashMap<>();
@@ -205,7 +205,7 @@ public class GestionLibro {
 
         //Por EBookVideo   
         EBookVideo ev1 = new EBookVideo(5000, "www.tusvideos.com/El_codigo_Da_Vinci", "DA", 15, 20000, "El codigo Da Vinci", 0, 12);
-        EBookVideo ev2 = new EBookVideo(2000, "www.tusvideos.com/Angeles_y_demonios", "AD", 15, 2500, "Angeles y demonios ", 0, 4);
+        EBookVideo ev2 = new EBookVideo(2000, "www.tusvideos.com/Angeles_y_demonios", "AD", 15, 25000, "Angeles y demonios ", 0, 4);
         EBookVideo ev3 = new EBookVideo(1500, "www.tusvideos.com/Inferno", "IN", 10, 60000, "Inferno ", 0, 8);
 
         saga.put(2, ev2);
